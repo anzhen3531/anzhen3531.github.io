@@ -1,0 +1,198 @@
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,inital-scale=1,user-scalable=no">
+  <title>mallGateway [ Hexo ]</title>
+  <!-- bootstrapcss文件 -->
+ <!--  <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"> -->
+<!--   
+<link rel="stylesheet" href="/css/zhl.css">
+
+ -->
+  
+    <!-- stylesheets list from config.yml -->
+    
+      <link rel="stylesheet" href="/css/fork-awesome.min.css">
+    
+      <link rel="stylesheet" href="/css/zhl.css">
+    
+  
+  
+<meta name="generator" content="Hexo 5.4.0"></head>
+<body>
+<div class="container-fluid">
+  <div class="row">
+  <div id="wrap" class="col-md-12">
+    <div id="header">
+	<div id="header-left">
+	<h1 id="header-title"> 
+	<a href="/">
+		Hexo
+	</a>
+	</h1>
+	
+	</div>
+	<div id="header-right">
+		
+		
+		<a href="/"  title="home"><i class="fa fa-home ">home</i></a>
+		
+		<a target="_blank" rel="noopener" href="https://github.com/lizehongss/demo_show"  title="demo"><i class="fa fa-code ">demo</i></a>
+		
+		<a href="/about"  title="about"><i class="fa fa-user ">about</i></a>
+		
+		<a href="/"  title="music"><i class="fa fa-music ">music</i></a>
+		
+		
+	</div>
+</div>
+
+  </div>
+  </div>
+  <div id="content" class="row">
+    <div id="content-left" class="col-md-4">
+      
+
+	
+
+	
+	<div class="widget-wrap">
+		<h3 class="widget-title fa fa-tags">标签</h3>
+		<div class="widget tags">
+		<a class="tag-span-link" href="/tags/JMM/" rel="tag">JMM<span class="tag-span-count">1</span></a> <a class="tag-span-link" href="/tags/JavaSe/" rel="tag">JavaSe<span class="tag-span-count">1</span></a> <a class="tag-span-link" href="/tags/docker/" rel="tag">docker<span class="tag-span-count">1</span></a> <a class="tag-span-link" href="/tags/gateway/" rel="tag">gateway<span class="tag-span-count">1</span></a> <a class="tag-span-link" href="/tags/project/" rel="tag">project<span class="tag-span-count">1</span></a>
+		</div>
+	</div>
+
+
+	
+	<div class="widget-wrap">
+		<h3 class="widget-title fa fa-archive">归档</h3>
+		<div class="widget">
+			<ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/">2021</a><span class="archive-list-count">5</span></li></ul>
+		</div>
+	</div>
+
+
+
+    </div>
+    <div id="content-right" class="col-md-8">
+    
+<article id="post">
+	<div class="post-title">
+  <h1>mallGateway</h1>
+  	</div>
+  <div class="page-meta">
+  	<span class="fa-wrap">
+  		<i class="fa fa-clock-o"></i>
+  		<span class="date-meta">2021-06-17</span>
+  	</span>
+  	<span class="fa-wrap">
+  		
+  		<i class="fa fa-tags"></i>
+  		<span class="tags-meta">gateway</span>
+  		
+  	</span>
+  	<span class="fa-wrap">
+  		
+  	</span>
+  </div>
+  <div class="post-content">
+  <h2 id="什么是服务网关-？"><a href="#什么是服务网关-？" class="headerlink" title="什么是服务网关 ？"></a>什么是服务网关 ？</h2><ul>
+<li><code>API </code>    是一个服务器，是系统统一堆外开放的入口，网关封装了内部架构，为每个客户端提供了一个定制的<code>API</code>。<code>API</code>网关方式的核心就是：所有的客户端和服务端通过统一的网关接入微服务，在网关层处理所有非业务功能</li>
+</ul>
+<p>优缺点 ：</p>
+<ul>
+<li>通过聚合接口使得服务对调用者透明，  降低客户端和服务端的耦合度。</li>
+<li>聚合后台服务，节省流量，提高性能，提升用户体验</li>
+<li>提供安全，流量控制，认证，过滤，监控，计费的API管理</li>
+</ul>
+<h2 id="为什么要有服务网关"><a href="#为什么要有服务网关" class="headerlink" title="为什么要有服务网关"></a>为什么要有服务网关</h2><p>单机应用  ： 浏览器发送请求给应用，应用查询数据库原路返回服务器，单机应用只有一个服务所以是用不上网关的</p>
+<p><img src="/2021/06/17/mallGateway/image-20210617145224101.png" alt="image-20210617145224101"></p>
+<p>微服务应用 ： </p>
+<h3 id="网关解决了什么问题"><a href="#网关解决了什么问题" class="headerlink" title="网关解决了什么问题"></a>网关解决了什么问题</h3><ul>
+<li>统一接入</li>
+<li>认证授权</li>
+<li>流量控制</li>
+<li>协议适配  </li>
+</ul>
+<h3 id="Gateway-实现API网关"><a href="#Gateway-实现API网关" class="headerlink" title="Gateway 实现API网关"></a>Gateway 实现<code>API</code>网关</h3><h4 id="核心概念"><a href="#核心概念" class="headerlink" title="核心概念"></a>核心概念</h4><ul>
+<li><pre><code> **路由（router）** :  包括`id ` ,   目标`uri` ,    一组断言和一组过滤器组成。如果断言路由为真，则说明请求的Uri和配置相符
+</code></pre>
+</li>
+<li>​    <strong>断言（Predicate）</strong>：检验</li>
+<li>​    <strong>过滤 （Filter）</strong>：</li>
+</ul>
+<h5 id="1、-路由的配置规则-："><a href="#1、-路由的配置规则-：" class="headerlink" title="1、 路由的配置规则 ："></a>1、 路由的配置规则 ：</h5><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">spring:</span></span><br><span class="line">  <span class="attr">cloud:</span></span><br><span class="line">    <span class="attr">gateway:</span></span><br><span class="line">      <span class="attr">routes:</span> <span class="comment">#配置路由路径</span></span><br><span class="line">        <span class="bullet">-</span> <span class="attr">id:</span> <span class="string">mall-auth</span>   <span class="comment">#  路由id </span></span><br><span class="line">          <span class="attr">uri:</span> <span class="string">lb://mall-auth</span>   <span class="comment"># 目标微服务地址</span></span><br><span class="line">          <span class="attr">predicates:</span>    <span class="comment">#  断言  检验请求地址是否和path相符  判断条件</span></span><br><span class="line">            <span class="bullet">-</span> <span class="string">Path=/mall-auth/**</span>   <span class="comment">#  根据请求路进行跳转</span></span><br><span class="line">            <span class="bullet">-</span> <span class="string">After=2017-01-20T17:42:47.789-07:00[America/Denver]</span> </span><br><span class="line">            <span class="comment"># 根据指定时间前进行判断</span></span><br><span class="line">            <span class="bullet">-</span> <span class="string">Before=2017-01-20T17:42:47.789-07:00[America/Denver]</span></span><br><span class="line">            <span class="comment"># 根据指定时间后进行判断</span></span><br><span class="line">            <span class="bullet">-</span> <span class="string">Between=2017-01-20T17:42:47.789-07:00[America/Denver],</span> <span class="number">2017-01-21T17:42:47.789-07:00</span>[<span class="string">America/Denver</span>]</span><br><span class="line">            <span class="comment"># 根据指定时间内进行判断</span></span><br><span class="line">            <span class="bullet">-</span> <span class="string">Cookie=chocolate,</span> <span class="string">ch.p</span></span><br><span class="line">            <span class="comment"># 根据cookie 进行判断</span></span><br><span class="line">            </span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+<h4 id="2、动态路由规则-："><a href="#2、动态路由规则-：" class="headerlink" title="2、动态路由规则 ："></a>2、动态路由规则 ：</h4><p>动态获取微服务地址： </p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">spring:</span></span><br><span class="line">  <span class="attr">cloud:</span></span><br><span class="line">    <span class="attr">gateway:</span></span><br><span class="line">      <span class="attr">discovery:</span>   </span><br><span class="line">          <span class="comment"># 通过开启与服务发现进行结合，通过serviceId转发到具体服务实例。</span></span><br><span class="line">        <span class="attr">locator:</span></span><br><span class="line">          <span class="attr">enabled:</span> <span class="literal">true</span></span><br><span class="line">          <span class="attr">lower-case-service-id:</span> <span class="literal">true</span> <span class="comment">#使用小写service-id</span></span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+<p>3、 Path过滤器</p>
+<p>4、 全局过滤器 <code>Global Filter</code> </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">全局过滤器不需要在配置文件中配置，作用在所有的路由上，z</span><br></pre></td></tr></table></figure>
+
+
+	</div>
+</article>
+
+
+
+    </div>
+  </div>
+  <div class="row">
+<div id="bottom" class="col-md-12"> 
+  <div class="bottom-nav">
+	
+	
+	<a href="https://github.com/lizehongss" class="fa fa-github fa-2x" target="_blank" title="Follow me" ></a>
+	
+	
+</div>
+<div class="bottom-info">
+	&copy; 2021 John Doe<br>
+	Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+	theme <a href="https://github.com/lizehongss/hexo-theme-zhl" target="_blank">zhl</a>
+</div>
+</div>
+</div>
+</div>
+<div id="tool">
+  <ul>
+    <li class="fa fa-angle-up top" id="top"></li>
+  </ul>
+</div>
+  <div class="bg_content">
+    <canvas id="canvas"></canvas>
+  </div>
+  
+  <!-- scripts list from theme config.yml -->
+  
+    <script src="/js/zhl.js"></script>
+  
+    <script src="/js/bj.js"></script>
+  
+
+<!-- jQ cdn  -->
+<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+<!-- bootstrap js cdn-->
+<!-- <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script> -->
+
+
+</body>
+</html>

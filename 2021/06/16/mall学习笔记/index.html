@@ -6,7 +6,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,inital-scale=1,user-scalable=no">
-  <title>JavaJvm和JMM [ Hexo ]</title>
+  <title>mall学习笔记 [ Hexo ]</title>
   <!-- bootstrapcss文件 -->
  <!--  <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"> -->
 <!--   
@@ -83,7 +83,7 @@
     
 <article id="post">
 	<div class="post-title">
-  <h1>JavaJvm和JMM</h1>
+  <h1>mall学习笔记</h1>
   	</div>
   <div class="page-meta">
   	<span class="fa-wrap">
@@ -93,7 +93,7 @@
   	<span class="fa-wrap">
   		
   		<i class="fa fa-tags"></i>
-  		<span class="tags-meta">JMM</span>
+  		<span class="tags-meta">project</span>
   		
   	</span>
   	<span class="fa-wrap">
@@ -101,38 +101,12 @@
   	</span>
   </div>
   <div class="post-content">
-  <span id="more"></span>
-
-<p>JVM(Java虚拟机的运行时区域)  和 JMM(Java内存模型) 有什么关系 </p>
-<blockquote>
-<p>JMM 和  Java并发编程有关  </p>
-</blockquote>
-<h2 id="JMM-是什么"><a href="#JMM-是什么" class="headerlink" title="JMM 是什么"></a>JMM 是什么</h2><ul>
-<li>JMM是一种符合内存规范的, 屏蔽了各种硬件和操作系统的访问差异的, 保证了Java程序在各种平台对内存访问都能保证效果一致的机制及规范</li>
-<li>Java内存模型规定了<strong>所有的变量</strong>都存储在主内存中, 每条线程还有自己的工作内存, 线程的工作内存中保存了该线程中是<strong>用到的变量的主内存副本拷贝</strong>, 线程对变量的所有操作都必须在工作内存中进行, 不能直接读写主内存。不同的线程之间也无法直接访问对方工作内存中的变量, 线程间变量的传递均需要自己的共工作内存和主存之间进行数据同步进行</li>
-<li>JMM就作用于工作内存和主内存之间数据同步过程。他规定了如何做数据同步以及什么时候做数据同步。</li>
-</ul>
-<h2 id="JMM-的主要作用-以及实现方式-解决了那些问题"><a href="#JMM-的主要作用-以及实现方式-解决了那些问题" class="headerlink" title="JMM 的主要作用  以及实现方式 解决了那些问题"></a>JMM 的主要作用  以及实现方式 解决了那些问题</h2><p><img src="/2021/06/16/JavaJVM%E5%92%8CJMM/image-20210616092723877.png" alt="image-20210616092723877"></p>
-<p>JMM是一种规范，目的是<strong>解决</strong>由于多线程通过共享内存进行通信时，储存在本地内存的<strong>数据不一致</strong></p>
-<p>、编译器会对<strong>代码指令重排序</strong>、处理器会对<strong>代码乱序执行</strong>等带来的问题</p>
-<p>原子性 ：</p>
-<blockquote>
-<p><em>即一个操作或者多个操作</em> <em>要么全部执行并且执行的过程不会被任何因素打断，要么就都不执行。</em></p>
-</blockquote>
-<p>​        Java中可以使用<code>synchronized </code>来保证方法和代码内的操作是原子性的 </p>
-<p>​        自Jdk1.5之后提供了一个<code>Lock</code>(使用的是实现类)包 可以保证方法和代码内的操作都是原子性的</p>
-<p> 而且俩者都是可重入锁 ？ </p>
-<blockquote>
-<p>解答文档<a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/R7Fu1HDW3N1pl1c9VJ2T5Q">https://mp.weixin.qq.com/s/R7Fu1HDW3N1pl1c9VJ2T5Q</a></p>
-</blockquote>
-<p>有序性 ： 即程序执行的顺序按照代码的先后顺序执行。</p>
-<p><code>volatile</code>关键字会禁止指令重排。<code>synchronized</code>关键字保证同一时刻只允许一条线程操作。</p>
-<p>可见性：</p>
-<blockquote>
-<p>可见性是指当多个线程访问同一个变量时，一个线程修改了这个变量的值，其他线程能够立即看得到修改的值。</p>
-</blockquote>
-<p>Java中的<code>volatile</code>关键字提供了一个功能，那就是被其修饰的变量在被修改后可以立即同步到主内存，被其修饰的变量在每次是用之前都从主内存刷新。因此，可以使用<code>volatile</code>来保证多线程操作时变量的可见性。</p>
-<p>除了<code>volatile</code>，Java中的<code>synchronized</code>和<code>final</code>两个关键字也可以实现可见性。只不过实现方式不同，这里不再展开了。</p>
+  <ol>
+<li><p>阅读项目</p>
+<p><img src="/2021/06/16/mall%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/image-20210616131124608.png" alt="image-20210616131124608"> </p>
+</li>
+</ol>
+<p>由于是分布式项目   所有的接口统一走  gateway   所以应该率先配置GateWay 并运行起来</p>
 
 	</div>
 </article>
