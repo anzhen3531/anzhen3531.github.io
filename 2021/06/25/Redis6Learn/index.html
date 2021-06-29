@@ -1,0 +1,656 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" href="/img/favicon.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="">
+  <meta name="author" content="John Doe">
+  <meta name="keywords" content="">
+  
+  <title>Redis6Learn - Hexo</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.7.2/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.11","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>Fluid</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="Redis6Learn">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2021-06-25 15:58" pubdate>
+        2021年6月25日 下午
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      3k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      38
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">Redis6Learn</h1>
+            
+            <div class="markdown-body">
+              <h1 id="Redis"><a href="#Redis" class="headerlink" title="Redis"></a>Redis</h1><h2 id="1、基本数据类型"><a href="#1、基本数据类型" class="headerlink" title="1、基本数据类型"></a>1、基本数据类型</h2><h3 id="String"><a href="#String" class="headerlink" title="String"></a>String</h3><p>redis 中的字符串value最多可以是512m</p>
+<p>关于字符串的操作命令 </p>
+<blockquote>
+<p>set <key>  value </key></p>
+<p>get <key> </key></p>
+<p>append <key>  value  ： 追加 </key></p>
+<p>strlen <key>  ： 获取key长度</key></p>
+<p>setnx  <key>   <value>  :  只有当key不存在时    设置key的值</value></key></p>
+<p>incr <key>   将key中存储的数字+1    只能对数字值操作，如果为空，新增值为1 （是原子性操作 ）</key></p>
+<p>decr  <key>  将key 中的数字 - 1</key></p>
+</blockquote>
+<p>多个key 和 value的操作 </p>
+<blockquote>
+<p> mset <key> <value> <key> <value>  </value></key></value></key></p>
+<p>原子性操作</p>
+<p>msetnx  <key> <value> <key> <value>   : 如果key中有之前存在过的  则不会设置成功</value></key></value></key></p>
+<p>setrange   <key>    <start>   <value> :   设置key 从start开始往后的所有值都是value</value></start></key></p>
+<p>setex <key> <seconds>  <value>  :    设置过期时间   </value></seconds></key></p>
+</blockquote>
+<blockquote>
+<p>mget <key> <value> <key> <value> </value></key></value></key></p>
+<p>getrange <key>  start  end  :  设置起始位置  类似于SubString    包含 start 和 end </key></p>
+<p>getset <key>  <value>  : 以新值换旧值</value></key></p>
+</blockquote>
+<h3 id="List"><a href="#List" class="headerlink" title="List"></a>List</h3><p>特点 ： 单键多值</p>
+<p>底层是一个双向链表，对两端的操作性能很高，通过索引下标的操作中间的节点性能较差</p>
+<p>常用命令 ：</p>
+<blockquote>
+<p>lpush / rpush <key>  <value>  <value>   <value>  </value></value></value></key></p>
+<p> 一个key 多个value  从左边或者是右边插入一个或者是多个值 </p>
+</blockquote>
+<blockquote>
+<p>ipop/rpop <key>  ： 从左边、右边弹出一个值， 值在键在，值亡键亡 </key></p>
+</blockquote>
+<blockquote>
+<p>rpoplpush <key>  <key1>  ： 从 key 右边弹出一个值  放入key1的左边 </key1></key></p>
+</blockquote>
+<blockquote>
+<p>lrange  <key>  <start>  <end>  ： 从左到右，按照下标获得元素</end></start></key></p>
+<p>lrange  <key>   0   -1 ：  遍历所有的值</key></p>
+<p>lindex   <key>  <index>  :   从左到右 ， 去key中下标index中的值</index></key></p>
+<p>llen  <key>  ： 获取key长度</key></p>
+</blockquote>
+<p><img src="/2021/06/25/Redis6Learn/image-20210625211038918.png" srcset="/img/loading.gif" lazyload alt="image-20210625211038918"></p>
+<p>注意  before 是在前面的意思    图中有失误</p>
+<h3 id="Set"><a href="#Set" class="headerlink" title="Set"></a>Set</h3><p>特点 ： 无需，不存储重复数据 </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><code class="hljs bash">192.168.1.57:6379&gt; sadd k1 v1 v2 v3    : 往<span class="hljs-built_in">set</span>集合添加值 <br>(<span class="hljs-built_in">integer</span>) 3     <br>192.168.1.57:6379&gt; smembers k1    : 遍历<span class="hljs-built_in">set</span>集合<br>1) <span class="hljs-string">&quot;v2&quot;</span><br>2) <span class="hljs-string">&quot;v1&quot;</span><br>3) <span class="hljs-string">&quot;v3&quot;</span><br>192.168.1.57:6379&gt; sismember k1 v1    : 检测key里面有没有v1<br>(<span class="hljs-built_in">integer</span>) 1<br>192.168.1.57:6379&gt; sismember k1 v3<br>(<span class="hljs-built_in">integer</span>) 1<br>192.168.1.57:6379&gt; scard k1    : 获取<span class="hljs-built_in">set</span>集合长度<br>(<span class="hljs-built_in">integer</span>) 3<br>192.168.1.57:6379&gt; srem k1 v1    :  指定value 弹出 key<br>(<span class="hljs-built_in">integer</span>) 1<br>192.168.1.57:6379&gt; smembers k1  <br>1) <span class="hljs-string">&quot;v2&quot;</span><br>2) <span class="hljs-string">&quot;v3&quot;</span><br>192.168.1.57:6379&gt; spop k1   : 随机弹出一个数据  <br><span class="hljs-string">&quot;v3&quot;</span><br>192.168.1.57:6379&gt; srandmember k1 2    : 从key中随机取俩个值  不会删除数据<br><br>192.168.1.57:6379&gt; smove k1 k2 v2<br>(<span class="hljs-built_in">integer</span>) 1<br>192.168.1.57:6379&gt; smembers k2<br>1) <span class="hljs-string">&quot;v2&quot;</span><br>2) <span class="hljs-string">&quot;4&quot;</span><br>3) <span class="hljs-string">&quot;3&quot;</span><br>4) <span class="hljs-string">&quot;1&quot;</span><br>192.168.1.57:6379&gt; sinter k1 k2  : 取俩个结合交集<br>(empty list or <span class="hljs-built_in">set</span>)<br>192.168.1.57:6379&gt;  sunion k1 k2  : 取俩个集合并集<br>1) <span class="hljs-string">&quot;4&quot;</span><br>2) <span class="hljs-string">&quot;v2&quot;</span><br>3) <span class="hljs-string">&quot;1&quot;</span><br>4) <span class="hljs-string">&quot;3&quot;</span><br>192.168.1.57:6379&gt; sdiff k1 k2  : 取俩个集合差集<br>(empty list or <span class="hljs-built_in">set</span>)<br></code></pre></td></tr></table></figure>
+
+
+
+<p>底层数据结构，就是用hash表去除value字段 用filed做value</p>
+<h3 id="Hash"><a href="#Hash" class="headerlink" title="Hash"></a>Hash</h3><p>特点 ： key  -&gt; value</p>
+<p>关系映射图 ： </p>
+<p><img src="/2021/06/25/Redis6Learn/image-20210625215237439.png" srcset="/img/loading.gif" lazyload alt="image-20210625215237439"></p>
+<p>常用命令 ：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs bash">192.168.1.57:6379&gt; hset user:1001 id 1  <span class="hljs-comment"># 创建hash &lt;key&gt;  field value </span><br>(<span class="hljs-built_in">integer</span>) 1<br>192.168.1.57:6379&gt; hset user:1001 name zhangshan  <span class="hljs-comment"># 添加 属性 </span><br>(<span class="hljs-built_in">integer</span>) 1<br>192.168.1.57:6379&gt; hget user:1001 id   <span class="hljs-comment"># 通过filed 获取key中的value</span><br><span class="hljs-string">&quot;1&quot;</span><br>192.168.1.57:6379&gt; hmset user:1001 age 10 danger 12 <span class="hljs-comment"># 批量添加filed 和 value </span><br>OK<br>192.168.1.57:6379&gt; hexists user:1001 id <span class="hljs-comment"># 判断key中是否有这个属性</span><br>(<span class="hljs-built_in">integer</span>) 1<br>192.168.1.57:6379&gt;<br>192.168.1.57:6379&gt; hkeys user:1001 <span class="hljs-comment"># 获取key中所有的属性 </span><br>1) <span class="hljs-string">&quot;id&quot;</span><br>2) <span class="hljs-string">&quot;name&quot;</span><br>3) <span class="hljs-string">&quot;age&quot;</span><br>4) <span class="hljs-string">&quot;danger&quot;</span><br>192.168.1.57:6379&gt; hvals user:1001  <span class="hljs-comment"># 获取key中所有的值</span><br>1) <span class="hljs-string">&quot;1&quot;</span><br>2) <span class="hljs-string">&quot;zhangshan&quot;</span><br>3) <span class="hljs-string">&quot;10&quot;</span><br>4) <span class="hljs-string">&quot;12&quot;</span><br>192.168.1.57:6379&gt; hincrby user:1001 age 2 <span class="hljs-comment"># 获取key中filed 属性加 2 </span><br>(<span class="hljs-built_in">integer</span>) 12<br>192.168.1.57:6379&gt;  hsetnx user:1001 age 222 <span class="hljs-comment"># 如果key中有这个filed则添加失败否则成功</span><br>(<span class="hljs-built_in">integer</span>) 0<br></code></pre></td></tr></table></figure>
+
+
+
+<h3 id="zset"><a href="#zset" class="headerlink" title="zset"></a>zset</h3><p>底层数据结构</p>
+<h2 id="2、常用命令"><a href="#2、常用命令" class="headerlink" title="2、常用命令"></a>2、常用命令</h2><p>创建key :  set  key  value</p>
+<p>查看所有key  : keys *</p>
+<p>判断key是否存在 ： exists key</p>
+<p>查看key类型 ： type key </p>
+<p>删除key : del  key</p>
+<p>阻塞删除key :  unlink  key  </p>
+<p>设置key的过期时间  : expire  key </p>
+<p>查看key的剩余时间 ： ttl   key    -1表示永不过期   -2 表示已经过期 </p>
+<p>切换数据库   ： select   index   </p>
+<p>查看数据库中的key 数量 ： dbsize</p>
+<h2 id="3、Redis发布和订阅"><a href="#3、Redis发布和订阅" class="headerlink" title="3、Redis发布和订阅"></a>3、Redis发布和订阅</h2><h3 id="3-1、-什么是发布和订阅"><a href="#3-1、-什么是发布和订阅" class="headerlink" title="3.1、 什么是发布和订阅"></a>3.1、 什么是发布和订阅</h3><blockquote>
+<p>是一种消息通信模式： 发布者发送消息，订阅者接收消息</p>
+</blockquote>
+<h3 id="3-2、-Redis发布和订阅"><a href="#3-2、-Redis发布和订阅" class="headerlink" title="3.2、 Redis发布和订阅"></a>3.2、 Redis发布和订阅</h3><p>订阅端</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs bash">192.168.1.57:6379&gt; subscribe channel  <span class="hljs-comment"># 订阅频道命令 </span><br>Reading messages... (press Ctrl-C to quit)<br>1) <span class="hljs-string">&quot;subscribe&quot;</span><br>2) <span class="hljs-string">&quot;channel&quot;</span><br>3) (<span class="hljs-built_in">integer</span>) 1<br>1) <span class="hljs-string">&quot;message&quot;</span><br>2) <span class="hljs-string">&quot;channel&quot;</span><br>3) <span class="hljs-string">&quot;hello&quot;</span><br></code></pre></td></tr></table></figure>
+
+<p>发布端</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash">192.168.1.57:6379&gt; publish channel <span class="hljs-string">&quot;hello&quot;</span> <span class="hljs-comment"># 向频道中发送信息</span><br>(<span class="hljs-built_in">integer</span>) 1<br>192.168.1.57:6379&gt;<br></code></pre></td></tr></table></figure>
+
+
+
+<h2 id="4、Redis6-新数据类型"><a href="#4、Redis6-新数据类型" class="headerlink" title="4、Redis6 新数据类型"></a>4、Redis6 新数据类型</h2><h4 id="4-1、bitmaps"><a href="#4-1、bitmaps" class="headerlink" title="4.1、bitmaps"></a>4.1、bitmaps</h4><p>什么是bitmaps</p>
+<blockquote>
+<p>Bitmaps并不是实际的数据类型，而是定义在String类型上的一个面向字节操作的集合。因为字符串是二进制安全的块，他们的最大长度是512M。</p>
+</blockquote>
+<blockquote>
+<p>字节操作可以分为两类：恒定时间的单个字节操作如将一个字节设置为1或者0、或者获取一个字节的值，和批量字节操作如在给定的字节范围内计算设置字节的数量。</p>
+</blockquote>
+<p> <img src="/2021/06/25/Redis6Learn/image-20210626124901895.png" srcset="/img/loading.gif" lazyload alt="image-20210626124901895"></p>
+<p>Redis中bitmaps的常用操作<br>基本使用<br>Redis 的位数组是自动扩展，如果设置了某个偏移位置超出了现有的内容范围，就会自动将位数组进行零扩充。</p>
+<ol>
+<li>setbit key offset value</li>
+<li>getbit key offset</li>
+</ol>
+<ol start="3">
+<li><p>bitcount key [start end]</p>
+</li>
+<li><p>bitpos key targetBit [start] [end] （起始版本：2.8.7）</p>
+</li>
+</ol>
+<p>计算位图指定范围（start到end，单位为字节，如果不指定就是获取全部）第一个偏移量对应的值等于targetBit的位置。</p>
+<ol start="5">
+<li>bitop and|or|not|xor destkey key [key…]</li>
+</ol>
+<p>做多个bitmap的and（交集）、or（并集）、not（非）、xor（异或）操作并将结果保存到destkey中。</p>
+<p>Redis 的位数组是自动扩展，如果设置了某个偏移位置超出了现有的内容范围，就会自动将位数组进行零扩充。</p>
+<p>6.魔术指令 bitfield</p>
+<p>前文我们设置 (setbit) 和获取 (getbit) 指定位的值都是单个位的，如果要一次操作多个位，就必须使用管道来处理。</p>
+<p>不过 Redis 的 3.2 版本以后新增了一个功能强大的指令，有了这条指令，不用管道也可以一次进行多个位的操作。</p>
+<p>bitfield 有三个子指令，分别是 get/set/incrby，它们都可以对指定位片段进行读写，但是最多只能处理 64 个连续的位，如果超过 64 位，就得使用多个子指令，bitfield 可以一次执行多个</p>
+<h4 id="4-2、HyperLogLog"><a href="#4-2、HyperLogLog" class="headerlink" title="4.2、HyperLogLog"></a>4.2、HyperLogLog</h4><p>用途： 用来做基数统计的算法</p>
+<p>常用命令 </p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs shell">127.0.0.1:6379&gt; pfadd program &quot;java&quot;  # 创建HyperLogLog <br>(integer) 1<br>127.0.0.1:6379&gt; pfadd program &quot;php&quot;<br>(integer) 1<br>127.0.0.1:6379&gt; pfadd program &quot;java&quot;  # 如果有相同的则返回0  成功加入返回1<br>(integer) 0<br>127.0.0.1:6379&gt; pfadd program &quot;spring&quot; &quot;mysql&quot; # 添加多个value  <br>(integer) 1<br>127.0.0.1:6379&gt; pfcount program3  # 统计个数<br>(integer) 7<br>127.0.0.1:6379&gt; pfmerge program3 program program1  # 将俩个合并到一个里面去<br>OK<br></code></pre></td></tr></table></figure>
+
+<h4 id="4-3、Geospatial"><a href="#4-3、Geospatial" class="headerlink" title="4.3、Geospatial"></a>4.3、Geospatial</h4><p>提供了经纬度，查询，范围查询，距离查询，经纬度 hash等常见操作</p>
+<p>常用命令</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs shell">127.0.0.1:6379&gt; geoadd china 121.48 41.23 shanghai #  创建geo数据类型<br>(integer) 1<br>127.0.0.1:6379&gt; geopos china shanghai   #  获取<br>1) 1) &quot;121.48000091314315796&quot;<br>   2) &quot;41.23000123535113914&quot;<br>127.0.0.1:6379&gt; geoadd china 106.50 29.53 beijng<br>(integer) 1<br>127.0.0.1:6379&gt; geodist china beijng shanghai  km # 两个地方相隔<br>&quot;1875.9716&quot;<br>127.0.0.1:6379&gt; georadius china 110 30 1000 km # 查找周围范围的value<br>1) &quot;beijng&quot;<br><br></code></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+<h2 id="5、Redis事务"><a href="#5、Redis事务" class="headerlink" title="5、Redis事务"></a>5、Redis事务</h2><h4 id="5-1、redis事务是什么"><a href="#5-1、redis事务是什么" class="headerlink" title="5.1、redis事务是什么"></a>5.1、redis事务是什么</h4><blockquote>
+<p>是一个隔离操作：事务中的所有命令都会序列化，按照顺序执行。事务在执行过程中，不会被其他的客户端发来的请求所打断</p>
+<p>作用：串连多个操作 防止别的命令进行插队</p>
+</blockquote>
+<h4 id="5-2、-事务怎么样使用"><a href="#5-2、-事务怎么样使用" class="headerlink" title="5.2、 事务怎么样使用"></a>5.2、 事务怎么样使用</h4><p>Redis 事务命令   ： </p>
+<p>multi (开启事务) 进入组队模式  </p>
+<p>exec  (执行命令)  执行队列中的命令</p>
+<p>discard (消除命令) ：将队列中的命令清空 关闭事务</p>
+<p><img src="/2021/06/25/Redis6Learn/image-20210626151933051.png" srcset="/img/loading.gif" lazyload alt="image-20210626151933051"></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs shell">127.0.0.1:6379&gt; multi  # 开启redis事务 <br>OK<br>127.0.0.1:6379(TX)&gt; set key anzhen  # 将命令放入队列中<br>QUEUED<br>127.0.0.1:6379(TX)&gt; set k1 zimu<br>QUEUED<br>127.0.0.1:6379(TX)&gt; exec  # 将队列的命令一起执行 <br>1) OK<br>2) OK<br>127.0.0.1:6379&gt; <br><br></code></pre></td></tr></table></figure>
+
+
+
+<p>几点注意事项 ： </p>
+<blockquote>
+<p>如果是在组队阶段，命令出现了错误时，所有命令都不会执行 </p>
+<p>如果时在执行阶段，出现了错误时，会继续执行下一条命令</p>
+</blockquote>
+<h4 id="5-3、Redis事务锁机制"><a href="#5-3、Redis事务锁机制" class="headerlink" title="5.3、Redis事务锁机制"></a>5.3、Redis事务锁机制</h4><p>解决事务冲突时用到什么锁  ？？</p>
+<ul>
+<li><p>悲观锁</p>
+<ul>
+<li><blockquote>
+<p>悲观锁(Pessimistic Lock)，顾名思义，就是很悲观，每次去拿数据的时候都认为别人会修改，所以每次在拿数据的时候都会上锁，这样别人想拿这个数据就会block直到它拿到锁。传统的关系型数据库里边就用到了很多这种锁机制，比如行锁，表锁等，读锁，写锁等，都是在做操作之前先上锁。</p>
+</blockquote>
+<p>缺点  ——&gt;   效率太低 ：只能一个线程进行操作 </p>
+</li>
+</ul>
+</li>
+<li><p>乐观锁</p>
+<ul>
+<li><blockquote>
+<p>进行操作时，给线程数据加上字段 version，通过版本号判断数据有没有被修改过</p>
+</blockquote>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="5-4、Redis事务三特性"><a href="#5-4、Redis事务三特性" class="headerlink" title="5.4、Redis事务三特性"></a>5.4、Redis事务三特性</h4><ul>
+<li>不保证原子性 <ul>
+<li>事务中，如果出现错误不会发生回滚 ，而是执行下一条命令</li>
+</ul>
+</li>
+<li>没有隔离级别的概念<ul>
+<li>队列中的命令没有提交之前都不会实际执行，因为事务提交前任何命令都不会实际执行</li>
+</ul>
+</li>
+<li>单独的隔离操作<ul>
+<li>事务中所有的命令都会序列化，按照顺序执行。事务执行的过程中，不会被其他客户端发来的命令请求所打断</li>
+</ul>
+</li>
+</ul>
+<h2 id="6、Redis-主从复制"><a href="#6、Redis-主从复制" class="headerlink" title="6、Redis 主从复制"></a>6、Redis 主从复制</h2><figure class="highlight smali"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs smali">port:26379<br>daemonize yes<br>sentinel<span class="hljs-built_in"> monitor </span>mymaster<br></code></pre></td></tr></table></figure>
+
+<p>主从复制特点以及 ： </p>
+<p>读写分离 ， 主服务器用来写入， 从服务器用来读取</p>
+<p>容灾快速回复： 如果从服务器挂了的话，可以切换到另一台从服务器</p>
+<p>搭建详情: 查看此博客 <a target="_blank" rel="noopener" href="https://www.cnblogs.com/kingyifan/p/11721422.html#!comments">https://www.cnblogs.com/kingyifan/p/11721422.html#!comments</a></p>
+<p>redis 集群搭建： <a target="_blank" rel="noopener" href="https://www.cnblogs.com/niceyoo/p/14118146.html">https://www.cnblogs.com/niceyoo/p/14118146.html</a> 查看此博客 </p>
+<p>声明  所有的搭建都是在docker 上搭建的</p>
+<h2 id="7、缓存的三大问题"><a href="#7、缓存的三大问题" class="headerlink" title="7、缓存的三大问题"></a>7、缓存的三大问题</h2><h3 id="7-1、缓存穿透"><a href="#7-1、缓存穿透" class="headerlink" title="7.1、缓存穿透"></a>7.1、缓存穿透</h3><p>是什么</p>
+<blockquote>
+<p> 缓存的命中率减低，导致请求绝大部分直接走数据库，造成数据库压力过大甚至宕机</p>
+</blockquote>
+<p><img src="/2021/06/25/Redis6Learn/image-20210627172316133.png" srcset="/img/loading.gif" lazyload alt="image-20210627172316133"></p>
+<p> <img src="/2021/06/25/Redis6Learn/image-20210627172541377.png" srcset="/img/loading.gif" lazyload alt="image-20210627172541377"></p>
+<h3 id="7-2、缓存雪崩"><a href="#7-2、缓存雪崩" class="headerlink" title="7.2、缓存雪崩"></a>7.2、缓存雪崩</h3><p>是什么</p>
+<blockquote>
+<p>极少时间段，查询大量key的集中过期情况</p>
+</blockquote>
+<p>解决方案 ：</p>
+<ul>
+<li><p>构建多级缓存架构： nginx(缓存） + redis(缓存) + ehcache(其他缓存)</p>
+</li>
+<li><p>使用锁或者是队列 </p>
+<ul>
+<li>使用锁或者是队列的方式来保证不会有大量的线程对数据库一次性进行读写，从而避免失效时大量的并发请求落到底层存储系统上。不适合高并发情况</li>
+</ul>
+</li>
+<li><p>设置过期标志更新缓存：</p>
+<ul>
+<li>记录缓存数据是否已过期（设置提前量），如果过期会触发通知另外的线程在后台去更新实际key的缓存</li>
+</ul>
+</li>
+<li><p>将缓存失效时间分散开：</p>
+<ul>
+<li>我们可以在原来失效时间的基础上增加一个随机值，这样每一个缓存的过期时间的重复率就会降低，很难引发集体失效的事件。</li>
+</ul>
+</li>
+</ul>
+<h3 id="7-3、缓存击穿"><a href="#7-3、缓存击穿" class="headerlink" title="7.3、缓存击穿"></a>7.3、缓存击穿</h3><p>是什么</p>
+<blockquote>
+<p>某一个热点 key，在缓存过期的一瞬间，同时有大量的请求打进来，由于此时缓存过期了，所以请求最终都会走到数据库，造成瞬时数据库请求量大、压力骤增，甚至可能打垮数据库。</p>
+</blockquote>
+<p>解决方案： </p>
+<ul>
+<li><p>预先设置热门数据 ：     在redis高峰访问之前，把一些热门数据提前存入到redis里面，加大这些热门数据key长</p>
+</li>
+<li><p>实时调整：现场监控那些数据热门，实时增加key的过期时长</p>
+</li>
+<li><p>使用锁 ：</p>
+</li>
+</ul>
+<h2 id="8、Redis多线程"><a href="#8、Redis多线程" class="headerlink" title="8、Redis多线程"></a>8、Redis多线程</h2><p>Redis并不是多线程？ </p>
+<blockquote>
+<p>Redis是多路IO复用，执行命令还是单线程，</p>
+</blockquote>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/Redis/">Redis</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2021/06/18/SpringSecurity/">
+                        <span class="hidden-mobile">SpringSecurity</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.3/dist/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.1/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.8/dist/clipboard.min.js" ></script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>
