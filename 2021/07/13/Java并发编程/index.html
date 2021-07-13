@@ -185,7 +185,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      2.4k 字
+      3.6k 字
     </span>
   
 
@@ -195,7 +195,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      28
+      42
        分钟
     </span>
   
@@ -237,6 +237,7 @@
 </blockquote>
 <p>线程不安全是指什么? 举例说明</p>
 <blockquote>
+<p>多个线程在操作共同数据时， 数据会发生错乱。 </p>
 </blockquote>
 <p>并发出现线程不安全的本质什么?</p>
 <blockquote>
@@ -254,9 +255,11 @@
 </blockquote>
 <p>线程安全有哪些实现思路?</p>
 <blockquote>
+<p>互斥同步（阻塞同步），非阻塞同步（CAS）， 无同步方案（）</p>
 </blockquote>
 <p>如何理解并发和并行的区别</p>
 <blockquote>
+<p>并发是一段时间一个线程执行多个任务，  并行是同一个时间点多个线程执行多个任务</p>
 </blockquote>
 <h3 id="为什么需要多线程"><a href="#为什么需要多线程" class="headerlink" title="为什么需要多线程 ??"></a>为什么需要多线程 ??</h3><p>内存/cpu/IO设备的速度是有很大的差距的,为了合理利用CPU的高性能,平衡这三者的速度差异,让计算机体系结构,操作系统,编译程序都做出了巨大贡献,主要体现为:</p>
 <ul>
@@ -342,9 +345,9 @@
 </blockquote>
 <p>一个对象的初始化完成(构造函数执行结束)先行发生于它的 finalize() 方法的开始</p>
 <h5 id="8-传递性"><a href="#8-传递性" class="headerlink" title="8.传递性"></a>8.传递性</h5><p>如果操作 A 先行发生于操作 B，操作 B 先行发生于操作 C，那么操作 A 先行发生于操作 C.</p>
-<h4 id="线程安全-不是一个非真即假的命题"><a href="#线程安全-不是一个非真即假的命题" class="headerlink" title="线程安全:不是一个非真即假的命题"></a>线程安全:不是一个非真即假的命题</h4><p>一个类在可以被多个线程安全调用时就是线程安全的。</p>
+<h3 id="线程安全-不是一个非真即假的命题"><a href="#线程安全-不是一个非真即假的命题" class="headerlink" title="线程安全:不是一个非真即假的命题"></a>线程安全:不是一个非真即假的命题</h3><p>一个类在可以被多个线程安全调用时就是线程安全的。</p>
 <p>线程安全不是一个非真即假的命题，可以将共享数据按照安全程度的强弱分成一下五类：不可变、线程绝对安全、相对线程安全、线程兼容和线程对立。</p>
-<h5 id="不可变"><a href="#不可变" class="headerlink" title="不可变"></a>不可变</h5><p>不可变的对象一定是线程安全的，不需要再采取任何线程的安全保障措施。只要一个不可变的对象被正确的构建出来，永远也不会看到它在多个线程中处于不一致的状态</p>
+<h4 id="不可变"><a href="#不可变" class="headerlink" title="不可变"></a>不可变</h4><p>不可变的对象一定是线程安全的，不需要再采取任何线程的安全保障措施。只要一个不可变的对象被正确的构建出来，永远也不会看到它在多个线程中处于不一致的状态</p>
 <p>不可变的类型 ： </p>
 <ul>
 <li><p>final字段修饰的基本数据类型 </p>
@@ -370,8 +373,8 @@
 <blockquote>
 <p>因为Collecitons.unmodifiable(xxx)会对原先的集合进行拷贝，需要对集合进行修改的方法都是直接抛出异常</p>
 </blockquote>
-<h5 id="绝对线程安全"><a href="#绝对线程安全" class="headerlink" title="绝对线程安全"></a>绝对线程安全</h5><p>不管运行时环境如何，调用者都不需要任何额外的同步措施</p>
-<h5 id="相对线程安全"><a href="#相对线程安全" class="headerlink" title="相对线程安全"></a>相对线程安全</h5><p>相对线程安全需要保证对这个对象单独的操作是线程安全的，在调用的时候不需要做任何额外的保障措施。</p>
+<h4 id="绝对线程安全"><a href="#绝对线程安全" class="headerlink" title="绝对线程安全"></a>绝对线程安全</h4><p>不管运行时环境如何，调用者都不需要任何额外的同步措施</p>
+<h4 id="相对线程安全"><a href="#相对线程安全" class="headerlink" title="相对线程安全"></a>相对线程安全</h4><p>相对线程安全需要保证对这个对象单独的操作是线程安全的，在调用的时候不需要做任何额外的保障措施。</p>
 <p>但是对于一些特定顺序的连续调用，就可能需要在<strong>调用端使用额外的同步手段</strong>来保证调用的正确性</p>
 <p>场景显示</p>
 <p>将元素删除之后进行获取 </p>
@@ -390,26 +393,77 @@
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs java">executorService.execute(() -&gt; &#123;<br>    <span class="hljs-keyword">synchronized</span> (vector) &#123;<br>        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; vector.size(); i++) &#123;<br>            vector.remove(i);<br>        &#125;<br>    &#125;<br>&#125;);<br>executorService.execute(() -&gt; &#123;<br>    <span class="hljs-keyword">synchronized</span> (vector) &#123;<br>        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; vector.size(); i++) &#123;<br>            System.out.println(vector.get(i));<br>        &#125;<br>    &#125;<br>&#125;);<br></code></pre></td></tr></table></figure>
 
 <p>对俩个方法进行加锁，保证同步</p>
-<h5 id="线程兼容"><a href="#线程兼容" class="headerlink" title="线程兼容"></a>线程兼容</h5><p>线程兼容是指<strong>对象本身并不是线程安全的</strong>，但是可以通过在<strong>调用端正确的使用同步手段来保证对象在并发环境中可以安全地使用</strong>，我们通常说一个类是线程不安全通常就是指这种情况</p>
-<h5 id="线程对立"><a href="#线程对立" class="headerlink" title="线程对立"></a>线程对立</h5><p>线程对立是<strong>无论调用端是否采取了同步措施</strong>，<strong>都无法在多线程环境中并发使用的代码</strong> </p>
+<h4 id="线程兼容"><a href="#线程兼容" class="headerlink" title="线程兼容"></a>线程兼容</h4><p>线程兼容是指<strong>对象本身并不是线程安全的</strong>，但是可以通过在<strong>调用端正确的使用同步手段来保证对象在并发环境中可以安全地使用</strong>，我们通常说一个类是线程不安全通常就是指这种情况</p>
+<h4 id="线程对立"><a href="#线程对立" class="headerlink" title="线程对立"></a>线程对立</h4><p>线程对立是<strong>无论调用端是否采取了同步措施</strong>，<strong>都无法在多线程环境中并发使用的代码</strong> </p>
 <p>由于 Java 语言天生就具备多线程特性，线程对立这种排斥多线程的代码是很少出现的，而且通常都是有害的，应当尽量避免。</p>
 <p>什么是线程安全 ？？   有哪几种线程安全的 </p>
 <blockquote>
 <p>一个类在多个线程安全调用的情况就是线程安全 </p>
 <p>不可变，绝对线程安全，相对线程安全，线程兼容，线程对立</p>
 </blockquote>
-<h4 id="线程安全的实现方式"><a href="#线程安全的实现方式" class="headerlink" title="线程安全的实现方式"></a>线程安全的实现方式</h4><h5 id="1、互斥同步"><a href="#1、互斥同步" class="headerlink" title="1、互斥同步"></a>1、互斥同步</h5><p>ReetrantLock 和 synchronized </p>
+<h3 id="线程安全的实现方式"><a href="#线程安全的实现方式" class="headerlink" title="线程安全的实现方式"></a>线程安全的实现方式</h3><h4 id="1、互斥同步"><a href="#1、互斥同步" class="headerlink" title="1、互斥同步"></a>1、互斥同步</h4><p>ReetrantLock 和 synchronized </p>
 <p>初步分析查看 ：<a target="_blank" rel="noopener" href="https://www.pdai.tech/md/java/thread/java-thread-x-thread-basic.html#%E7%BA%BF%E7%A8%8B%E4%BA%92%E6%96%A5%E5%90%8C%E6%AD%A5">https://www.pdai.tech/md/java/thread/java-thread-x-thread-basic.html#%E7%BA%BF%E7%A8%8B%E4%BA%92%E6%96%A5%E5%90%8C%E6%AD%A5</a></p>
 <p>详细深入查看文档 ：</p>
-<p> synchronized <a target="_blank" rel="noopener" href="https://www.pdai.tech/md/java/thread/java-thread-x-key-synchronized.html">https://www.pdai.tech/md/java/thread/java-thread-x-key-synchronized.html</a></p>
-<p>ReetrantLock ：<a target="_blank" rel="noopener" href="https://www.pdai.tech/md/java/thread/java-thread-x-lock-ReentrantLock.html">https://www.pdai.tech/md/java/thread/java-thread-x-lock-ReentrantLock.html</a></p>
-<h5 id="2、非阻塞式同步"><a href="#2、非阻塞式同步" class="headerlink" title="2、非阻塞式同步"></a>2、非阻塞式同步</h5><p>非阻塞式同步和阻塞式同步有什么不同？</p>
+<h5 id="synchronized"><a href="#synchronized" class="headerlink" title="synchronized"></a>synchronized</h5><p> <a target="_blank" rel="noopener" href="https://www.pdai.tech/md/java/thread/java-thread-x-key-synchronized.html">https://www.pdai.tech/md/java/thread/java-thread-x-key-synchronized.html</a></p>
+<h5 id="ReetrantLock"><a href="#ReetrantLock" class="headerlink" title="ReetrantLock"></a>ReetrantLock</h5><p> ：<a target="_blank" rel="noopener" href="https://www.pdai.tech/md/java/thread/java-thread-x-lock-ReentrantLock.html">https://www.pdai.tech/md/java/thread/java-thread-x-lock-ReentrantLock.html</a></p>
+<h4 id="2、非阻塞式同步"><a href="#2、非阻塞式同步" class="headerlink" title="2、非阻塞式同步"></a>2、非阻塞式同步</h4><p>非阻塞式同步和阻塞式同步有什么不同？</p>
 <blockquote>
 <p>阻塞式同步，不论多少线程都只能一条线程进行代码中，并且需要一直加锁放锁会带来性能问题</p>
 </blockquote>
 <h6 id="一-CAS"><a href="#一-CAS" class="headerlink" title="一)CAS"></a>一)CAS</h6><p>使用基于乐观并发策略: 先进行操作，如果没有其他线程争用共享数据，那就操作成功，否则就采取补偿措施（不断重试，直到成功为止）。这种乐观的并发策略都不需要将线程阻塞，因此这种同步操作称之为非阻塞式同步</p>
 <h6 id="二）AtomicIntger"><a href="#二）AtomicIntger" class="headerlink" title="二）AtomicIntger"></a>二）AtomicIntger</h6><p>J.U.C包里面的整数原子类AtomicInteger ，其中的compareAndSet() 和 getAndIncrement()等方法都使用了Unsafe类的CAS操作</p>
-<h5 id="3、无同步方案"><a href="#3、无同步方案" class="headerlink" title="3、无同步方案"></a>3、无同步方案</h5>
+<p>源码奉上</p>
+<p>incrementAndGet获得自增   </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">final</span> <span class="hljs-keyword">int</span> <span class="hljs-title">incrementAndGet</span><span class="hljs-params">()</span> </span>&#123;<br>    <span class="hljs-keyword">return</span> unsafe.getAndAddInt(<span class="hljs-keyword">this</span>, valueOffset, <span class="hljs-number">1</span>) + <span class="hljs-number">1</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>var1 指示对象内存地址，var2 指示该字段相对对象内存地址的偏移，var4 指示操作需要加的数值，这里为 1。通过 getIntVolatile(var1, var2) 得到旧的预期值，通过调用 compareAndSwapInt() 来进行 CAS 比较，如果该字段内存地址中的值等于 var5，那么就更新内存地址为 var1+var2 的变量为 var5+var4。</p>
+<p>可以看到 getAndAddInt() 在一个循环中进行，发生冲突的做法是不断的进行重试。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">final</span> <span class="hljs-keyword">int</span> <span class="hljs-title">getAndAddInt</span><span class="hljs-params">(Object var1, <span class="hljs-keyword">long</span> var2, <span class="hljs-keyword">int</span> var4)</span> </span>&#123;<br>    <span class="hljs-keyword">int</span> var5;<br>    <span class="hljs-keyword">do</span> &#123;<br>        var5 = <span class="hljs-keyword">this</span>.getIntVolatile(var1, var2);<br>    &#125; <span class="hljs-keyword">while</span>(!<span class="hljs-keyword">this</span>.compareAndSwapInt(var1, var2, var5, var5 + var4));<br><br>    <span class="hljs-keyword">return</span> var5;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+
+<h6 id="三）-ABA"><a href="#三）-ABA" class="headerlink" title="三） ABA"></a>三） ABA</h6><p>如果一个变量初次读取的时候是A值，它的值被改成了B，后面又被改成A，那CAS操作会认为它没有被进行修改</p>
+<p>JUC提供了一个带有标记的原子引用类AtomicStampedReference来解决这个问题，它可以通过控制变量值的版本来保证CAS的正确性。大部分情况下ABA问题不会影响程序的并发的正确性，如果需要解决这个ABA的问题，该用传统的阻塞式同步会比原子类更加高效</p>
+<h4 id="3、无同步方案"><a href="#3、无同步方案" class="headerlink" title="3、无同步方案"></a>3、无同步方案</h4><h5 id="一）-栈封闭"><a href="#一）-栈封闭" class="headerlink" title="一） 栈封闭"></a>一） 栈封闭</h5><p>因为多个线程要操作共享变量时才会导致线程安全问题 </p>
+<p>多个变量操作局部变量时，不会导致线程安全问题，因为局部变量是存储在虚拟机栈中，每个线程独有一份 </p>
+<h5 id="二）线程本地存储"><a href="#二）线程本地存储" class="headerlink" title="二）线程本地存储"></a>二）线程本地存储</h5><p>如果一段代码中所需的数据必须与其他代码共享，那就看看这些共享数据是否保证能在同一个线程中执行。如果能保证，我们就可以把共享数据的可见范围限制在同一线程之内，这样，无需同步也能保证线程之间不会出现数据争用问题。</p>
+<p>符合这种特点的应用并不少见，大部分使用消费队列的架构模式（如生产者和消费者模式) 都会将产品的消费过程尽量在一个线程中消费完。其中一个最典型的应用实例就是经典Web交互模型中的“一个请求对应一个服务器线程”的处理方式，这种处理方式广泛使得很多Web服务端应用都可以使用线程本地存储来解决线程安全问题。</p>
+<p>Java怎么解决本地线程呢？ </p>
+<blockquote>
+<p>可以使用java.lang.ThreadLocal类来实现线程本地存储功能</p>
+</blockquote>
+<p>案例展示 </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs java">ThreadLocal&lt;Integer&gt; stringThreadLocal = <span class="hljs-keyword">new</span> ThreadLocal&lt;Integer&gt;();<br><span class="hljs-keyword">int</span> s = <span class="hljs-number">0</span>;<br><span class="hljs-keyword">new</span> Thread(()-&gt;&#123;<br>    stringThreadLocal.set(s + <span class="hljs-number">1</span>);<br>    System.out.println(stringThreadLocal.get());<br>    <span class="hljs-keyword">try</span> &#123; TimeUnit.SECONDS.sleep(<span class="hljs-number">10</span>);&#125;<span class="hljs-keyword">catch</span> (InterruptedException e)&#123;e.printStackTrace(); &#125;<br>    stringThreadLocal.remove();<br>&#125;,<span class="hljs-string">&quot;线程一号&quot;</span>).start();<br><br><br><span class="hljs-keyword">new</span> Thread(()-&gt;&#123;<br>    stringThreadLocal.set(s + <span class="hljs-number">2</span>);<br>    System.out.println(stringThreadLocal.get());<br>    stringThreadLocal.remove();<br>&#125;,<span class="hljs-string">&quot;线程二号&quot;</span>).start();<br></code></pre></td></tr></table></figure>
+
+<p>输出结果</p>
+<p><img src="/2021/07/13/Java%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/image-20210713194437056.png" srcset="/img/loading.gif" lazyload alt="image-20210713194437056"> </p>
+<p>每个线程都是独立保存一份</p>
+<p> 分析一下源码,了解清楚底层实现.  </p>
+<p>解释一下下列现象</p>
+<p><img src="/2021/07/13/Java%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/image-20210713200021645.png" srcset="/img/loading.gif" lazyload alt="image-20210713200021645"> </p>
+<p>为什么得到的是空值??</p>
+<blockquote>
+<p>由于ThradLocal调用的是Thread类中定义的ThreadLocalMap进行存储,当线程结束后,这个缓存值会被清理掉</p>
+<p>所以会返回空值</p>
+</blockquote>
+<p>ThreadLocal的Set方法 就是获取线程的存储map</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-function">ThreadLocalMap <span class="hljs-title">getMap</span><span class="hljs-params">(Thread t)</span> </span>&#123;<br>    <span class="hljs-keyword">return</span> t.threadLocals;<br>&#125;<br><br><br><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">set</span><span class="hljs-params">(T value)</span> </span>&#123;<br>    Thread t = Thread.currentThread();<br>    ThreadLocalMap map = getMap(t);<br>    <span class="hljs-keyword">if</span> (map != <span class="hljs-keyword">null</span>)<br>        map.set(<span class="hljs-keyword">this</span>, value);<br>    <span class="hljs-keyword">else</span><br>        createMap(t, value);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+
+
+
+<p>查看源码后得知: 每个线程里面都有一个threadLocals </p>
+<p><img src="/2021/07/13/Java%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/image-20210713195652693.png" srcset="/img/loading.gif" lazyload alt="image-20210713195652693"></p>
+<p>总结 ::</p>
+<blockquote>
+<p>ThreadLocal从理论上不是来解决线程安全问题的, 因为根本就不存在多线程竞争问题 </p>
+</blockquote>
+<p>在一些场景 (尤其是使用线程池) 下，由于 ThreadLocal.ThreadLocalMap 的底层数据结构导致 ThreadLocal 有内存泄漏的情况，应该尽可能在每次使用 ThreadLocal 后手动调用 remove()，以避免出现 ThreadLocal 经典的内存泄漏甚至是造成自身业务混乱的风险。</p>
+<h5 id="三）可重入代码"><a href="#三）可重入代码" class="headerlink" title="三）可重入代码"></a>三）可重入代码</h5><p>这种代码也叫纯代码 ，可以在代码执行中的任何时候中断它，转而去执行另一段代码（包括递归调用它本身），</p>
+<p>而在控制权返回后，原来的程序不会出现任何错误</p>
+<p>可重入的代码有一些公共特征： 不依赖存储在堆内存上的数据和公共的系统资源、用到的状态量都从参数中传入，不调用非可重入的方法等。</p>
+
             </div>
             <hr>
             <div>
