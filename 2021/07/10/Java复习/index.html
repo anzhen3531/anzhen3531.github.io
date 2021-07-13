@@ -1,0 +1,695 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" href="/img/favicon.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="">
+  <meta name="author" content="John Doe">
+  <meta name="keywords" content="">
+  
+  <title>Java复习 - Hexo</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.7.2/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.11","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>Fluid</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="Java复习">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2021-07-10 08:55" pubdate>
+        2021年7月10日 早上
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      3.1k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      34
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">Java复习</h1>
+            
+            <div class="markdown-body">
+              <h1 id="Java整体分析"><a href="#Java整体分析" class="headerlink" title="Java整体分析"></a>Java整体分析</h1><h2 id="Java基础"><a href="#Java基础" class="headerlink" title="Java基础"></a>Java基础</h2><h3 id="面向对象"><a href="#面向对象" class="headerlink" title="面向对象"></a>面向对象</h3><ol>
+<li>多态</li>
+<li>封装</li>
+<li>继承</li>
+</ol>
+<h4 id="封装是什么-？"><a href="#封装是什么-？" class="headerlink" title="封装是什么 ？"></a>封装是什么 ？</h4><blockquote>
+<p>将抽象数据类型基于数据的操作封装在一起，使其构成一个不可分割的独立实体。</p>
+<p>数据被保护抽象数据类型在内部 ，尽可能地隐藏内部的细节，只提供外部的一些接口进行访问 。</p>
+<p>用户无需关注内部的细节，但是可以通过外部的接口使用访问对象</p>
+</blockquote>
+<p>优点： </p>
+<ul>
+<li>减少耦合 ，可以独立开发，测试，使用，理解</li>
+<li>减轻维护的负担：可以更容易被理解，并且在调试的时候不影响其他模块</li>
+<li>有效地调节性能：可以通过剖析确定那些模块影响性能 </li>
+<li>提高软件的可重用性</li>
+<li>降低构建大型系统地风险：即使整个系统不可以，但是这些独立的模块有可能是可以用的 </li>
+</ul>
+<h4 id="继承是什么-？"><a href="#继承是什么-？" class="headerlink" title="继承是什么 ？"></a>继承是什么 ？</h4><blockquote>
+<p>继承的关系 是一种  is -a  的关系 ， 继承应该遵循里氏替换原则，子类必须能替换掉父类所有的对象 </p>
+</blockquote>
+<h4 id="多态是什么？"><a href="#多态是什么？" class="headerlink" title="多态是什么？"></a>多态是什么？</h4><p>多态分为： </p>
+<ol>
+<li><p>运行时多态</p>
+<ol>
+<li><blockquote>
+<p>运行时多态指程序中定义的对象引用所指向的具体类型在运行期间确定</p>
+</blockquote>
+</li>
+</ol>
+</li>
+<li><p>编译时多态</p>
+<ol>
+<li><blockquote>
+<p>编译时多态主要指方法的重载</p>
+</blockquote>
+</li>
+</ol>
+</li>
+</ol>
+<p>运行时多态三条件:</p>
+<ul>
+<li>继承</li>
+<li>复写</li>
+<li>向上转型</li>
+</ul>
+<h4 id="类图的关系"><a href="#类图的关系" class="headerlink" title="类图的关系"></a>类图的关系</h4><h5 id="泛化关系-用来描述继承关系，Java中extends"><a href="#泛化关系-用来描述继承关系，Java中extends" class="headerlink" title="泛化关系(用来描述继承关系，Java中extends)"></a>泛化关系(用来描述继承关系，Java中extends)</h5><p> <img src="/2021/07/10/Java%E5%A4%8D%E4%B9%A0/image-20210710093913469.png" srcset="/img/loading.gif" lazyload alt="image-20210710093913469"></p>
+<h5 id="实现关系（Realization）"><a href="#实现关系（Realization）" class="headerlink" title="实现关系（Realization）"></a>实现关系（Realization）</h5><p>用来实现一个接口，在Java中使用implement关键字</p>
+<p><img src="/2021/07/10/Java%E5%A4%8D%E4%B9%A0/image-20210710094132172.png" srcset="/img/loading.gif" lazyload alt="image-20210710094132172"> </p>
+<p>聚合关系 </p>
+<blockquote>
+<p>若B是A的成员变量，但B不在A的构造函数中生成（new）,只在需要用到的时候才new，则构成聚合关系。</p>
+</blockquote>
+<p>依赖关系（dependency）</p>
+<blockquote>
+<p>若A在某个成员函数中使用了局部变量B，则构成了依赖关系。</p>
+</blockquote>
+<p>组合关系 （Composition）</p>
+<blockquote>
+<p>若B是A的成员变量，且B在A的构造函数种生成（new），则构成组合关系。</p>
+</blockquote>
+<h3 id="基本数据类型"><a href="#基本数据类型" class="headerlink" title="基本数据类型"></a>基本数据类型</h3><p>8个基本数据类型     占用的字节数 </p>
+<p>boolean    /  1</p>
+<p>byte  /  8</p>
+<p>char   /    16</p>
+<p>short   /  16</p>
+<p>int   / 32 </p>
+<p>float   /  32 </p>
+<p>long    / 64 </p>
+<p>double  /  64</p>
+<p>自动装箱和拆箱 </p>
+<p>基本数据类型都有对应的包装类 </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">IntLearn</span> </span>&#123;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> </span>&#123;<br>        Integer integer = <span class="hljs-number">10</span>;  <span class="hljs-comment">// 装箱 </span><br>        <span class="hljs-keyword">int</span> y = integer;    <span class="hljs-comment">// 拆箱 </span><br>        System.out.println(y);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+
+<h4 id="缓存池"><a href="#缓存池" class="headerlink" title="缓存池"></a>缓存池</h4><p>解释一下这个代码 为什么不会相等 ？？ </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs java">Integer integer = <span class="hljs-keyword">new</span> Integer(<span class="hljs-number">10</span>);<br>Integer integer1 = Integer.valueOf(<span class="hljs-number">10</span>);<br>System.out.println(integer == integer1);    <span class="hljs-comment">// false </span><br></code></pre></td></tr></table></figure>
+
+<p>​    </p>
+<p>new  Integer(10) 是创建在堆内存里面的对象  ， 每次都会创建一个对象 </p>
+<p>Integer.valueOf(10) 是将常量池的引用赋值过来 ，多个相同的会使用同一个对象</p>
+<p>valueOf() 源码解析</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> Integer <span class="hljs-title">valueOf</span><span class="hljs-params">(<span class="hljs-keyword">int</span> i)</span> </span>&#123;<br>    <span class="hljs-comment">// 判断i 是否属于缓存池的范围</span><br>    <span class="hljs-keyword">if</span> (i &gt;= IntegerCache.low &amp;&amp; i &lt;= IntegerCache.high)<br>        <span class="hljs-comment">// 如果属于则从缓存中读取</span><br>        <span class="hljs-keyword">return</span> IntegerCache.cache[i + (-IntegerCache.low)];<br>    <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> Integer(i);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+
+<p>编译器会<strong>在缓冲池范围内的基本类型</strong>自动装箱过程调用 valueOf() 方法，因此多个 Integer 实例使用自动装箱来创建并且值相同，那么就会引用相同的对象。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs java">Integer i  = <span class="hljs-number">124</span>;<br>Integer y = <span class="hljs-number">124</span>;<br>System.out.println(i == y);    <span class="hljs-comment">// true</span><br></code></pre></td></tr></table></figure>
+
+
+
+
+
+<p>基本数据类型包装类的缓冲区大小 </p>
+<blockquote>
+<p>boolean values true and false</p>
+<p>all byte values</p>
+<p>short values between -128 and 127</p>
+<p>int values between -128 and 127</p>
+<p>char in the range \u0000 to \u007F</p>
+</blockquote>
+<h4 id="String"><a href="#String" class="headerlink" title="String"></a>String</h4><p>string 是基本数据类型吗 ？</p>
+<blockquote>
+<p>不是， String是引用数据类型 </p>
+</blockquote>
+<p>String 可以被继承吗 ？ </p>
+<blockquote>
+<p>不可以  String 是final修饰的</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">final</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">String</span></span><br><span class="hljs-class">    <span class="hljs-keyword">implements</span> <span class="hljs-title">java</span>.<span class="hljs-title">io</span>.<span class="hljs-title">Serializable</span>, <span class="hljs-title">Comparable</span>&lt;<span class="hljs-title">String</span>&gt;, <span class="hljs-title">CharSequence</span> </span>&#123;<br>    <span class="hljs-comment">/** The value is used for character storage. */</span><br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span> <span class="hljs-keyword">char</span> value[];<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>String 实现了 序列化接口，比较接口 ， 字符序列接口 </p>
+<p>数据存储采用了 final修饰的字符数组， 所以String数据是不可更改的 </p>
+</blockquote>
+<p>不可变有什么好处 ？？ </p>
+<ul>
+<li>可以缓存hash值<ul>
+<li>在创建的时候就要算hash值， 不可变性就只要算一次hash</li>
+</ul>
+</li>
+<li>String Pool 的需要 <ul>
+<li>如果一个String对象已经被创建过了，那么就会从String Pool中取得引用。只有String是不可变的，才能使用StringPool</li>
+</ul>
+</li>
+<li>安全性 <ul>
+<li>String 经常作为参数，String不可变性质可以保证参数不可变</li>
+</ul>
+</li>
+<li>线程安全 <ul>
+<li>String不可变性天生具有线程安全 ，可以在多个线程中使用</li>
+</ul>
+</li>
+</ul>
+<p>可变的String有哪几个 ？ </p>
+<p>String Buffer   线程安全的    内部使用 <code>synchronized</code></p>
+<p> String Builder 不是线程安全的 </p>
+<p>String.Intern() </p>
+<blockquote>
+<p>使用 String.intern() 可以保证相同内容的字符串变量引用同一的内存对象。</p>
+</blockquote>
+<p>解释下列现象 </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs java">String string = <span class="hljs-string">&quot;anzhen&quot;</span>;<br>String anzhen = <span class="hljs-keyword">new</span> String(<span class="hljs-string">&quot;anzhen&quot;</span>);<br>System.out.println(string == anzhen);    <span class="hljs-comment">// false</span><br>System.out.println(anzhen.intern() == string);   <span class="hljs-comment">//  true </span><br></code></pre></td></tr></table></figure>
+
+
+
+<p>创建对象不同， 直接使用字面量创建String的话 ，先检查字符串常量池里面是否有这个常量，如果有的话 就将引用赋值给变量 ，没有就在常量池里创建这个对象</p>
+<blockquote>
+<p>使用字面量创建字符串实例的，会将新建的对象放入String Poll中 </p>
+</blockquote>
+<p>如果使用new String(“111”)的方式去创建对象，先查看字符串常量池里面是否有相等的字符串，如果没有的话就创建，如果有的话将那个字符串的引用地址给对象，对象保存的是指向常量池的引用</p>
+<blockquote>
+<p>开辟了俩个空间 </p>
+</blockquote>
+<h4 id="final"><a href="#final" class="headerlink" title="final"></a>final</h4><ol>
+<li>数据 <ol>
+<li>声明数据为常量，可以是编译时常量，也可能是运行时常量<ol>
+<li>对于基本数据类型 ，数据不能改变</li>
+<li>对于引用数据类型 ，也就不能引用其它对象，但是被引用的对象本身是可以修改的。</li>
+</ol>
+</li>
+</ol>
+</li>
+<li>方法 <ol>
+<li>声明的方法不能被子类重写</li>
+</ol>
+</li>
+<li>类 <ol>
+<li>声明的类不能被继承</li>
+</ol>
+</li>
+</ol>
+<h4 id="static"><a href="#static" class="headerlink" title="static"></a>static</h4><h5 id="静态变量"><a href="#静态变量" class="headerlink" title="静态变量"></a>静态变量</h5><p>静态变量和实例变量的区别 </p>
+<blockquote>
+<p>静态变量 ： 静态变量，称之为类变量，类的所有的实例都共享静态变量，静态变量在内存中只存在一份</p>
+<p>实例变量：每创建一个实例就会产生一个实例变量，它与实例同生共死</p>
+</blockquote>
+<h5 id="静态方法"><a href="#静态方法" class="headerlink" title="静态方法"></a>静态方法</h5><p>能不能声明 抽象静态方法 ？？？ </p>
+<blockquote>
+<p>不能， Illegal combination of modifiers: ‘abstract’ and ‘static’ 编译就会提示警告 </p>
+<p>原因 : 静态方法在类加载的时候就存在了，它不依赖于任何实例，所以静态方法必须有实现，所以不能抽象的 </p>
+</blockquote>
+<p>注意事项，静态方法中，不能有this , super</p>
+<h5 id="静态代码块"><a href="#静态代码块" class="headerlink" title="静态代码块"></a>静态代码块</h5><p>静态代码块只在类加载的时候执行一次 </p>
+<p>静态加载顺序呢 ？？ </p>
+<blockquote>
+<p>排在前面的先执行</p>
+</blockquote>
+<p>存在继承的情况下，初始化顺序为:</p>
+<ul>
+<li>父类(静态变量、静态语句块)</li>
+<li>子类(静态变量、静态语句块)</li>
+<li>父类(实例变量、普通语句块)</li>
+<li>父类(构造函数)</li>
+<li>子类(实例变量、普通语句块)</li>
+<li>子类(构造函数)</li>
+</ul>
+<h3 id="泛型"><a href="#泛型" class="headerlink" title="泛型"></a>泛型</h3><h5 id="泛型的10道面试题"><a href="#泛型的10道面试题" class="headerlink" title="泛型的10道面试题"></a>泛型的10道面试题</h5><h6 id="1、泛型是什么-？-有什么好处-？"><a href="#1、泛型是什么-？-有什么好处-？" class="headerlink" title="1、泛型是什么 ？  有什么好处 ？"></a>1、泛型是什么 ？  有什么好处 ？</h6><p><strong>泛型</strong> ：顾名思义就是 <strong>广泛的数据类型</strong>，也就是说什么数据类型都可以</p>
+<p>提供了编译器的安全 ，只有填写对应的属性才可以通过编译 </p>
+<h6 id="2、Java泛型如何工作？-什么是类型擦除-？？"><a href="#2、Java泛型如何工作？-什么是类型擦除-？？" class="headerlink" title="2、Java泛型如何工作？  什么是类型擦除 ？？"></a>2、Java泛型如何工作？  什么是类型擦除 ？？</h6><p>工作流程： </p>
+<blockquote>
+<p>Java中的泛型,只在编译阶段有效。在编译过程中,正确检验泛型结果后,会将泛型的相关信息擦出,并且在对象进入和离开方法的边界处添加类型检查和类型转换的方法。也就是说,泛型信息不会进入到运行时阶段。</p>
+</blockquote>
+<blockquote>
+<p>编译之后会将泛型擦除，比如List<String> 编译之后 就是 List </String></p>
+</blockquote>
+<h6 id="3、什么是泛型中的限定通配符和非限定通配符-？？"><a href="#3、什么是泛型中的限定通配符和非限定通配符-？？" class="headerlink" title="3、什么是泛型中的限定通配符和非限定通配符 ？？"></a>3、什么是泛型中的限定通配符和非限定通配符 ？？</h6><blockquote>
+<p>&lt; ? extends T&gt;  一定要是T类的子类才可以用这个</p>
+</blockquote>
+<blockquote>
+<?  super   T> 一定要是这个类的父类才可以用 
+</blockquote>
+<h6 id="4、用泛型写一个缓存淘汰算法"><a href="#4、用泛型写一个缓存淘汰算法" class="headerlink" title="4、用泛型写一个缓存淘汰算法"></a>4、用泛型写一个缓存淘汰算法</h6><blockquote>
+<p>对于喜欢Java编程的人来说这相当于是一次练习。给你个提示LinkedHashMap可以用来实现固定大小的LRU缓存  ，当LRU缓存已经满了的时候，它会把最老的键值对移出缓存。LinkedHashMap提供了一个称为removeEldestEntry()的方法，该方法会被put()和putAll()调用来删除最老的键值对。当然，如果你已经编写了一个可运行的JUnit测试，你也可以随意编写你自己的实现代码。</p>
+</blockquote>
+<h6 id="5、Array中可以用泛型吗"><a href="#5、Array中可以用泛型吗" class="headerlink" title="5、Array中可以用泛型吗?"></a>5、Array中可以用泛型吗?</h6><blockquote>
+<p>不可以， 如果数组想要使用泛型的话  可以使用list</p>
+</blockquote>
+<h6 id="6、如何阻止Java中的类型未检查的警告"><a href="#6、如何阻止Java中的类型未检查的警告" class="headerlink" title="6、如何阻止Java中的类型未检查的警告?"></a>6、如何阻止Java中的类型未检查的警告?</h6><blockquote>
+<p>将JDK版本提高到5.0以上</p>
+</blockquote>
+<h6 id="7、你可以把List传递给一个接受List参数的方法吗？"><a href="#7、你可以把List传递给一个接受List参数的方法吗？" class="headerlink" title="7、你可以把List传递给一个接受List参数的方法吗？"></a>7、你可以把List<String>传递给一个接受List<Object>参数的方法吗？</Object></String></h6><blockquote>
+<p>不可以， 这样会导致编译报错 ，</p>
+</blockquote>
+<h3 id="接口和实现类的区别"><a href="#接口和实现类的区别" class="headerlink" title="接口和实现类的区别"></a>接口和实现类的区别</h3><ul>
+<li>一个子类只能继承一个抽象类,但能实现多个接口</li>
+<li>抽象类可以有构造方法,接口没有构造方法</li>
+<li>抽象类可以有普通成员变量,接口没有普通成员变量</li>
+<li>抽象类和接口都可有静态成员变量,抽象类中静态成员变量访问类型任意，接口只能public static final(默认)</li>
+<li>抽象类可以没有抽象方法,抽象类可以有普通方法,接口中都是抽象方法</li>
+<li>抽象类可以有静态方法，接口不能有静态方法</li>
+<li>抽象类中的方法可以是public、protected;接口方法只有public abstract</li>
+</ul>
+<h3 id="Java反射机制"><a href="#Java反射机制" class="headerlink" title="Java反射机制"></a>Java反射机制</h3><blockquote>
+<p>反射是什么 ？ </p>
+<p>反射机制是在运行状态中，对于任意一个类，都能够知道这个类的所有属性和方法；对于任意的对象，都能够调用它的任意一个方法和属性；这种动态获取的信息以及动态调用对象的方法的功能称之为Java的反射机制</p>
+</blockquote>
+<p>如何理解Java的一切都是对象</p>
+<blockquote>
+<p>反射就是把java类中的各种成分映射成一个个的Java对象     类也是对象  例如：一个类有实例变量  静态变量， 方法  构造方法，包等等信息，利用反射技术可以对一个类进行剖析，把一个个组成部分映射成一个个Java对象</p>
+</blockquote>
+<ul>
+<li>Class类也是类的一种，与class关键字不同。</li>
+<li>手动编写的类被编译后会产生一个Class对象；其表示是创建的类的类型信息，而且这个Class对象保存在同名.class文件中</li>
+<li>每个通过关键词class标识的类，在内存中有且只有一个与之相对应得Class对象来描述类信息，无论创建多少个实例对象，其依据的都是用一个Class对象 </li>
+<li>Class类只存私有的构造器，因此Class对象只能由JVM创建和加载 </li>
+<li>Class类的对象作用是运行时提供或获得某个对象的类型信息，这点对于反射技术很重要</li>
+</ul>
+<p>获取Class对象的几种方式？ </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">// 获取Class对象的三种方式</span><br>logger.info(<span class="hljs-string">&quot;根据类名:  \t&quot;</span> + User.class);<br>logger.info(<span class="hljs-string">&quot;根据对象:  \t&quot;</span> + <span class="hljs-keyword">new</span> User().getClass());<br>logger.info(<span class="hljs-string">&quot;根据全限定类名:\t&quot;</span> + Class.forName(<span class="hljs-string">&quot;com.test.User&quot;</span>));<br></code></pre></td></tr></table></figure>
+
+
+
+<h4 id="反射调用流程小结"><a href="#反射调用流程小结" class="headerlink" title="反射调用流程小结"></a>反射调用流程小结</h4><p>最后，用几句话总结反射的实现原理：</p>
+<ol>
+<li>反射类及反射方法的获取，都是通过从列表中搜寻查找匹配的方法，所以查找性能会随类的大小方法多少而变化；</li>
+<li>每个类都会有一个与之对应的Class实例，从而每个类都可以获取method反射方法，并作用到其他实例身上；</li>
+<li>反射也是考虑了线程安全的，放心使用；</li>
+<li>反射使用软引用relectionData缓存class信息，避免每次重新从jvm获取带来的开销；</li>
+<li>反射调用多次生成新代理Accessor, 而通过字节码生存的则考虑了卸载功能，所以会使用独立的类加载器；</li>
+<li>当找到需要的方法，都会copy一份出来，而不是使用原来的实例，从而保证数据隔离；</li>
+<li>调度反射方法，最终是由jvm执行invoke0()执行；</li>
+</ol>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/Java/">Java</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2021/07/13/activiti%E5%AD%A6%E4%B9%A0/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">activiti学习</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2021/07/05/%E9%9D%A2%E8%AF%95%E9%A2%98%E6%8F%90%E5%8F%96/">
+                        <span class="hidden-mobile">面试题提取</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.3/dist/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.1/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.8/dist/clipboard.min.js" ></script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>

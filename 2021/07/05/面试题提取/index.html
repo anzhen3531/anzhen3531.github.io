@@ -1,0 +1,627 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" href="/img/favicon.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="">
+  <meta name="author" content="John Doe">
+  <meta name="keywords" content="">
+  
+  <title>面试题提取 - Hexo</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.7.2/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.11","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>Fluid</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="面试题提取">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2021-07-05 14:39" pubdate>
+        2021年7月5日 下午
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      2.6k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      27
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">面试题提取</h1>
+            
+            <div class="markdown-body">
+              <h1 id="面试题"><a href="#面试题" class="headerlink" title="面试题"></a>面试题</h1><h2 id="面试题基础板块"><a href="#面试题基础板块" class="headerlink" title="面试题基础板块"></a>面试题基础板块</h2><h3 id="JavaSe-常见面试题"><a href="#JavaSe-常见面试题" class="headerlink" title="JavaSe 常见面试题"></a><code>JavaSe</code> 常见面试题</h3><h4 id="1、-和-equals-的区别"><a href="#1、-和-equals-的区别" class="headerlink" title="1、==  和  equals 的区别"></a>1、==  和  equals 的区别</h4><blockquote>
+<p>== 比较的是地址值   </p>
+<p>​            基本类型 比较的是数值</p>
+<p>​            引用类型 比较的是地址</p>
+<p>equals 比较的是具体的值</p>
+</blockquote>
+<p>总结 </p>
+<blockquote>
+<p>== 对于基本类型来说是值比较，对于引用类型来说是比较的是引用；而 equals 默认情况下是引用比较，只是很多类重新了 equals 方法，比如 String、Integer 等把它变成了值比较，所以一般情况下 equals 比较的是值是否相等。</p>
+</blockquote>
+<h4 id="2、接口和抽象类的区别"><a href="#2、接口和抽象类的区别" class="headerlink" title="2、接口和抽象类的区别"></a>2、接口和抽象类的区别</h4><ul>
+<li><p><strong>都不能实例化</strong>，如果要实例化，抽象类变量必须指向实现所有抽象方法的子类对象，接口变量必须指向实现所有接口方法的类对象。</p>
+</li>
+<li><p><strong>抽象类需要被继承，接口需要被实现</strong></p>
+</li>
+<li><p>接口只能做方法申明（类似一个规范），抽象类中可以做方法申明，也可以做方法实现 （增强代码的扩展性）</p>
+</li>
+<li><p>接口定义的变量只能是公共的静态常量，抽象类中定义的变量是普通变量。</p>
+</li>
+<li><p>抽象类中的所有抽象方法都需要被子类实现，如果不能实现父类的全部方法，那么该子类只能是抽象类，一个类实现接口的时候，如不能全部实现接口方法，那么该类也只能为抽象类。</p>
+</li>
+<li><p><strong>抽象方法只能申明，不能实现</strong></p>
+</li>
+<li><p>抽象类里面可以没有抽象方法，接口里面方法没有方法体</p>
+</li>
+<li><p>如果一个类里面有抽象方法，那么这个类只能是抽象类，</p>
+</li>
+<li><p>抽象类的所有方法不能为静态和私有的，因为所有的抽象方法需要被实现。</p>
+</li>
+<li><p>接口可多实现，抽象类只能继承单个继承</p>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>抽象类</th>
+<th>接口</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>声明</td>
+<td>abstract</td>
+<td>interface</td>
+</tr>
+<tr>
+<td>实现</td>
+<td>子类通过extends来继承抽象类，如果<strong>子类不是抽象类</strong>的话需要提供抽象类中所有的证明方法的实现</td>
+<td>通过实现implements关键字来实现接口，它需要提供接口中所有的方法的实现</td>
+</tr>
+<tr>
+<td>构造器</td>
+<td>抽象类可以有构造器</td>
+<td>接口不能有构造器</td>
+</tr>
+<tr>
+<td>访问修饰符</td>
+<td>抽象类中可以是任意访问修饰符</td>
+<td>接口方法默认是public，并且不允许定义为private或者是protected</td>
+</tr>
+<tr>
+<td>多继承</td>
+<td>一个类中直接继承一个</td>
+<td>一个类中可以多实现接口</td>
+</tr>
+<tr>
+<td>字段声明</td>
+<td>抽象类的字段声明可以是任意的</td>
+<td>接口的字段都是static  和   final修饰的</td>
+</tr>
+</tbody></table>
+<h4 id="3、常用的集合类"><a href="#3、常用的集合类" class="headerlink" title="3、常用的集合类"></a>3、常用的集合类</h4><h6 id="是否线程安全"><a href="#是否线程安全" class="headerlink" title="是否线程安全"></a>是否线程安全</h6><h6 id="如何保证集合类线程安全"><a href="#如何保证集合类线程安全" class="headerlink" title="如何保证集合类线程安全"></a>如何保证集合类线程安全</h6><p>List</p>
+<ul>
+<li><p><code>ArrayList</code></p>
+<blockquote>
+<p>非线程安全    </p>
+<p>保证线程安全的方式 ：</p>
+<ol>
+<li><p>使用Vector  </p>
+</li>
+<li><p>使用<code>Collections.synchronizedList()</code>给集合类加锁 </p>
+</li>
+<li><p>使用新的集合类   CopyOnWriteArrayList 写时复制， 效率高 </p>
+</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs java">List&lt;String&gt; list = <span class="hljs-keyword">new</span> Vector&lt;&gt;();   <br><span class="hljs-comment">// 线程安全  (执行效率变低)  == 不建议使用</span><br>List&lt;String&gt; list = Collections.synchronizedList(<span class="hljs-keyword">new</span> ArrayList&lt;&gt;());   <span class="hljs-comment">// 使用collections 工具库创建 线程安全的集合</span><br>List&lt;String&gt; list = <span class="hljs-keyword">new</span> CopyOnWriteArrayList&lt;&gt;(); <span class="hljs-comment">// 写时复制</span><br></code></pre></td></tr></table></figure>
+
+</blockquote>
+</li>
+<li><p><code>HashMap</code></p>
+<blockquote>
+<p>非线程安全 </p>
+<p>保证线程安全的方式：</p>
+<ol>
+<li>给集合类，加锁 </li>
+<li>使用JUC包下的集合类   <code>ConcurrentHashMap</code></li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">// 效率低下   不推荐使用</span><br>Map&lt;String,String&gt; hash = Collections.synchronizedMap(<span class="hljs-keyword">new</span> HashMap&lt;&gt;());<br><br><span class="hljs-comment">// JUC 的hashMap 推荐使用  线程安全  读写分离</span><br>Map&lt;String,String&gt; map = <span class="hljs-keyword">new</span> ConcurrentHashMap();<br></code></pre></td></tr></table></figure></blockquote>
+</li>
+</ul>
+<h4 id="4、BIO、NIO、AIO-有什么区别？"><a href="#4、BIO、NIO、AIO-有什么区别？" class="headerlink" title="4、BIO、NIO、AIO 有什么区别？"></a><strong>4、<code>BIO</code>、<code>NIO</code>、<code>AIO</code> 有什么区别？</strong></h4><ul>
+<li><code>BIO</code>：Block IO 同步阻塞式 IO，就是我们平常使用的传统 IO，它的特点是模式简单使用方便，并发处理能力低。</li>
+<li><code>NIO</code>：New IO 同步非阻塞 IO，是传统 IO 的升级，客户端和服务器端通过 Channel（通道）通讯，实现了多路复用。</li>
+<li><code>AIO</code>：Asynchronous IO 是 <code>NIO</code> 的升级，也叫 <code>NIO2</code>，实现了异步非堵塞 IO ，异步 IO 的操作基于事件和回调机制。</li>
+</ul>
+<h4 id="5、什么是线程和进程"><a href="#5、什么是线程和进程" class="headerlink" title="5、什么是线程和进程"></a>5、什么是线程和进程</h4><p>详情查看另一篇博客 </p>
+<p><strong><code>JMM</code>是什么</strong>  ？</p>
+<blockquote>
+<p>是一套规范 ， 解决了多线程在通过共享内存进行通信时，储存在本地内存时数据不一致，编译器会对代码指令重排，CPU乱序执行所带来的问题</p>
+</blockquote>
+<h4 id="6、this与super的区别"><a href="#6、this与super的区别" class="headerlink" title="6、this与super的区别"></a>6、this与super的区别</h4><ul>
+<li>super:　它引用当前对象的直接父类中的成员（用来访问直接父类中被隐藏的父类中成员数据或函数，基类与派生类中有相同成员定义时如：super.变量名 super.成员函数据名（实参）</li>
+<li>this：它代表当前对象名（在程序中易产生二义性之处，应使用this来指明当前对象；如果函数的形参与类中的成员数据同名，这时需用this来指明成员变量名）</li>
+<li>super()和this()类似,区别是，super()在子类中调用父类的构造方法，this()在本类内调用本类的其它构造方法。</li>
+<li>super()和this()均需放在构造方法内第一行。</li>
+<li>尽管可以用this调用一个构造器，但却不能调用两个。</li>
+<li>this和super不能同时出现在一个构造函数里面，因为this必然会调用其它的构造函数，其它的构造函数必然也会有super语句的存在，所以在同一个构造函数里面有相同的语句，就失去了语句的意义，编译器也不会通过。</li>
+<li>this()和super()都指的是对象，所以，均不可以在static环境中使用。包括：static变量,static方法，static语句块。</li>
+<li>从本质上讲，this是一个指向本对象的指针, 然而super是一个Java关键字。</li>
+</ul>
+<h3 id="JVM常见面试题"><a href="#JVM常见面试题" class="headerlink" title="JVM常见面试题"></a><code>JVM常见面试题</code></h3><h4 id="JVM内存结构"><a href="#JVM内存结构" class="headerlink" title="JVM内存结构"></a><code>JVM</code>内存结构</h4><p>内存分布图 </p>
+<p>浅谈几大内存结构 </p>
+<p>不同虚拟机的运行时数据区可能略微有所不同，但都会遵从 Java 虚拟机规范， Java 虚拟机规范规定的区域分为以下 5 个部分：</p>
+<ul>
+<li>程序计数器（Program Counter Register）：当前线程所执行的字节码的行号指示器，字节码解析器的工作是通过改变这个计数器的值，来选取下一条需要执行的字节码指令，分支、循环、跳转、异常处理、线程恢复等基础功能，都需要依赖这个计数器来完成；</li>
+<li>Java 虚拟机栈（Java Virtual Machine Stacks）：用于存储局部变量表、操作数栈、动态链接、方法出口等信息；</li>
+<li>本地方法栈（Native Method Stack）：与虚拟机栈的作用是一样的，只不过虚拟机栈是服务 Java 方法的，而本地方法栈是为虚拟机调用 Native 方法服务的；</li>
+<li>Java 堆（Java Heap）：Java 虚拟机中内存最大的一块，是被所有线程共享的，几乎所有的对象实例都在这里分配内存；</li>
+<li>方法区（<code>Methed Area</code>）：用于存储已被虚拟机加载的类信息、常量、静态变量、即时编译后的代码等数据。</li>
+</ul>
+<p><code>JVM</code>内存结构图</p>
+<p><img src="/2021/07/05/%E9%9D%A2%E8%AF%95%E9%A2%98%E6%8F%90%E5%8F%96/image-20210706083832326.png" srcset="/img/loading.gif" lazyload alt="image-20210706083832326"></p>
+<p>创建对象流程</p>
+<p>判断该对象对应的类是否以及加载过 </p>
+<p>为对象分配内存</p>
+<ol>
+<li><p>如果内存规整的话采用指针碰撞创建内存 </p>
+</li>
+<li><p>如果内存不规整的话</p>
+<ol>
+<li>虚拟机需要维护一个列表 </li>
+<li>空闲列表分配</li>
+</ol>
+</li>
+<li><p>处理并发安全问题</p>
+<ol>
+<li>采用CAS配上失败重试保证更新的原子性</li>
+<li>每个线程预先分配一块TLAB</li>
+</ol>
+</li>
+<li><p>初始化分配的空间 - 所有的属性设置默认值，保证对象实例字段在不赋值时可以直接使用</p>
+</li>
+<li><p>设置对象的对象头</p>
+</li>
+<li><p>执行inti方法进行初始化</p>
+</li>
+</ol>
+<p>什么是指针碰撞 ？？</p>
+<blockquote>
+<p>如果是Java堆的内存是规整，即使所有的内存用过的都在一边，没用过的都在另一边。分配内存时将中间的指针指示器向空闲的内存移动一段与对象大小相等的距离，这样便完成内存分工作</p>
+</blockquote>
+<p>空闲列表？？</p>
+<blockquote>
+<p>如果Java堆的内存是不完整的，则需要有虚拟机维护一个列表来记录那些内存是可以用的，这样在分配的时候可以从列表中查询到足够大的内存空间分配给对象，更新空闲列表</p>
+</blockquote>
+<p>如何解决对象并发安全 ？？</p>
+<blockquote>
+<ol>
+<li><p>对分配的内存空间的动作进行同步处理（采用CAS +失败重试来保障更新操作的原子性）</p>
+</li>
+<li><p>把内存分配的动作按照线程划分在不同的空间之中进行，即每个线程在Java堆中预先分配了一小块内存，称之为本地线程分配缓冲（Thread Local Allocation Buffer, <code>TLAB</code>）哪个线程要分配内存，就在哪个线程的TLAB上分配。只有TLAB用完并分配新的TLAB时，才需要同步锁。通过设置虚拟机参数：-XX:+/-UserTLAB参数来设定虚拟机是否使用TLAB。</p>
+</li>
+</ol>
+</blockquote>
+<p>浅拷贝和深拷贝 </p>
+<blockquote>
+<p>浅复制：仅仅是指向被复制的内存地址，如果原地址发生改变，那么浅复制出来的对象也会相应的改变。</p>
+<p>深复制：在计算机中开辟一块新的内存地址用于存放复制的对象。</p>
+</blockquote>
+<h3 id="Spring常见面试题"><a href="#Spring常见面试题" class="headerlink" title="Spring常见面试题"></a>Spring常见面试题</h3><h4 id="1、SpringIOC"><a href="#1、SpringIOC" class="headerlink" title="1、SpringIOC"></a>1、<code>SpringIOC</code></h4><p><code>IOC</code>控制反转, 将创建对象的操作交予Spring管理，</p>
+<blockquote>
+<p>对组件对象控制权的转移，从程序代码本身转移到了外部容器。</p>
+</blockquote>
+<p><code>IOC</code>有什么作用</p>
+<p>管理对象的创建和依赖关系的维护。对象创建并不是一件简单事，当对象关系复杂的时，如果依赖关系需要程序员来维护的话，那是相当头疼的</p>
+<p>解耦，由容器去维护具体的对象</p>
+<p>托管了类的生产过程，比如我们需要在类的生产过程中做一些处理，最直接的例子就是代理，如果由容器可以把这部分处理交予容器，应用程序无需关心类时如何完成代理的</p>
+<p><code>IOC</code>有什么功能</p>
+<ul>
+<li>依赖注入</li>
+<li>依赖检查</li>
+<li>自动装配</li>
+<li>支持集合</li>
+<li>指定初始化方法和销毁方法</li>
+<li>支持回调某些方法（但是需要实现 Spring 接口，略有侵入）</li>
+</ul>
+<h4 id="2、SpringAOP"><a href="#2、SpringAOP" class="headerlink" title="2、SpringAOP"></a>2、<code>SpringAOP</code></h4>
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/%E9%9D%A2%E8%AF%95%E9%A2%98/">面试题</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2021/07/10/Java%E5%A4%8D%E4%B9%A0/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Java复习</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2021/06/25/Redis6Learn/">
+                        <span class="hidden-mobile">Redis6Learn</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.3/dist/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.1/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.8/dist/clipboard.min.js" ></script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>

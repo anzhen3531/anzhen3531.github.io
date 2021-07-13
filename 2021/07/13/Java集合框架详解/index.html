@@ -1,0 +1,744 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" href="/img/favicon.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="">
+  <meta name="author" content="John Doe">
+  <meta name="keywords" content="">
+  
+  <title>Java集合框架详解 - Hexo</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.7.2/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.11","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>Fluid</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="Java集合框架详解">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2021-07-13 15:14" pubdate>
+        2021年7月13日 下午
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      5.9k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      89
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">Java集合框架详解</h1>
+            
+            <div class="markdown-body">
+              <h1 id="Java集合框架"><a href="#Java集合框架" class="headerlink" title="Java集合框架"></a>Java集合框架</h1><h2 id="集合体系架构图"><a href="#集合体系架构图" class="headerlink" title="集合体系架构图"></a>集合体系架构图</h2><p><img src="https://www.pdai.tech/_images/java_collections_overview.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<h3 id="什么是容器，有什么优点？"><a href="#什么是容器，有什么优点？" class="headerlink" title="什么是容器，有什么优点？"></a>什么是容器，有什么优点？</h3><blockquote>
+<p>容器就是容纳其他Java对象的对象</p>
+<p>优点是: </p>
+<ul>
+<li>降低编程难度</li>
+<li>提高程序性能</li>
+<li>提高API间的互操作性</li>
+<li>降低学习难度</li>
+<li>降低设计和实现相关API的难度</li>
+<li>增加程序的重要性</li>
+</ul>
+<p>注意特点 ： 容器里面只能放入对象 ，如果是基本数据类型的话 ，需要转成包装类</p>
+</blockquote>
+<h3 id="Collection"><a href="#Collection" class="headerlink" title="Collection"></a>Collection</h3><blockquote>
+<p>容器主要包括Collection 和 Map俩种， Collection存储着对象的集合，而Map存储着键值对的映射表</p>
+</blockquote>
+<p>Set</p>
+<ul>
+<li>TreeSet<ul>
+<li>基于红黑树实现，支持有序性操作。但是查询效率不如HashSet，HashSet查找为O（1） TreeSet查找效率为O(logn)</li>
+</ul>
+</li>
+<li>HashSet<ul>
+<li>基于Hash表实现，支持快速查询，但不是支持有序操作。并且失去了元素的插入顺序信息，也就是说iterator遍历的HashSet得到的结果是不一样的</li>
+</ul>
+</li>
+<li>LinkedHashSet<ul>
+<li>具有HashSet的查询效率，内部采用双向链表维护元素的插入顺序</li>
+</ul>
+</li>
+</ul>
+<p>List</p>
+<ul>
+<li>ArrayList<ul>
+<li>基于动态数组实现</li>
+</ul>
+</li>
+<li>LinkedList <ul>
+<li>基于双向链表实现 </li>
+</ul>
+</li>
+<li>Vector<ul>
+<li>和ArrayList类似，但是是线程安全的</li>
+</ul>
+</li>
+</ul>
+<p>Queue</p>
+<ul>
+<li><p>​    LinkedList</p>
+<ul>
+<li>可以用它来实现双向队列 </li>
+</ul>
+</li>
+<li><h4 id="PriorityQueue"><a href="#PriorityQueue" class="headerlink" title="PriorityQueue"></a>PriorityQueue</h4><ul>
+<li>基于堆结构实现，可以用它来实现优先队列 </li>
+</ul>
+</li>
+</ul>
+<p>Map</p>
+<ul>
+<li>HashMap<ul>
+<li>基于哈希表实现</li>
+</ul>
+</li>
+<li>HashTree<ul>
+<li>基于红黑树实现</li>
+</ul>
+</li>
+<li>HashTable<ul>
+<li>和HashMap类似但是是线程安全的，意味着这个同一时刻多个线程同时写入不会导致数据不一致，它是遗留类，不应该去使用它。现在可以使用ConcurrentHashMap来支持线程安全，并且ConcurrentHashMap效率更高，因为ConcurrentHashMap引入了分段锁</li>
+</ul>
+</li>
+<li>LinkedHashMap<ul>
+<li>使用双向链表来维护元素的顺序，顺序为插入顺序或者是最少使用顺序</li>
+</ul>
+</li>
+</ul>
+<h3 id="ArrayList源码解析"><a href="#ArrayList源码解析" class="headerlink" title="ArrayList源码解析"></a>ArrayList源码解析</h3><h4 id="ArrayList概述"><a href="#ArrayList概述" class="headerlink" title="ArrayList概述"></a>ArrayList概述</h4><p>特点 ： 不是线程安全的，可以存储NULL ， 继承了List 是顺序容器</p>
+<h4 id="底层用什么进行存储"><a href="#底层用什么进行存储" class="headerlink" title="底层用什么进行存储"></a>底层用什么进行存储</h4><p>底层采用不能序列化的Object数组</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">transient</span> Object[] elementData; <span class="hljs-comment">// non-private to simplify nested class access</span><br><br><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * The size of the ArrayList (the number of elements it contains).</span><br><span class="hljs-comment"> *</span><br><span class="hljs-comment"> * <span class="hljs-doctag">@serial</span></span><br><span class="hljs-comment"> */</span><br><span class="hljs-keyword">private</span> <span class="hljs-keyword">int</span> size;  <span class="hljs-comment">// 长度 </span><br><span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> <span class="hljs-keyword">int</span> DEFAULT_CAPACITY = <span class="hljs-number">10</span>;  <span class="hljs-comment">// 默认容量</span><br></code></pre></td></tr></table></figure>
+
+
+
+
+
+<h4 id="构造方法"><a href="#构造方法" class="headerlink" title="构造方法"></a>构造方法</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">// 指定容量大小进行进项创建ArrayList</span><br><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">ArrayList</span><span class="hljs-params">(<span class="hljs-keyword">int</span> initialCapacity)</span> </span>&#123;<br>    <span class="hljs-keyword">if</span> (initialCapacity &gt; <span class="hljs-number">0</span>) &#123;<br>        <span class="hljs-keyword">this</span>.elementData = <span class="hljs-keyword">new</span> Object[initialCapacity];<br>    &#125; <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (initialCapacity == <span class="hljs-number">0</span>) &#123;<br>        <span class="hljs-keyword">this</span>.elementData = EMPTY_ELEMENTDATA;<br>    &#125; <span class="hljs-keyword">else</span> &#123;<br>        <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> IllegalArgumentException(<span class="hljs-string">&quot;Illegal Capacity: &quot;</span>+<br>                                           initialCapacity);<br>    &#125;<br>&#125;<br><br><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * Constructs an empty list with an initial capacity of ten.</span><br><span class="hljs-comment"> */</span><br><span class="hljs-comment">// 默认的空参构造</span><br><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">ArrayList</span><span class="hljs-params">()</span> </span>&#123;<br>    <span class="hljs-keyword">this</span>.elementData = DEFAULTCAPACITY_EMPTY_ELEMENTDATA;<br>&#125;<br><br><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * Constructs a list containing the elements of the specified</span><br><span class="hljs-comment"> * collection, in the order they are returned by the collection&#x27;s</span><br><span class="hljs-comment"> * iterator.</span><br><span class="hljs-comment"> *</span><br><span class="hljs-comment"> * <span class="hljs-doctag">@param</span> c the collection whose elements are to be placed into this list</span><br><span class="hljs-comment"> * <span class="hljs-doctag">@throws</span> NullPointerException if the specified collection is null</span><br><span class="hljs-comment"> */</span><br><span class="hljs-comment">// 传入集合类转换为ArrayList</span><br><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">ArrayList</span><span class="hljs-params">(Collection&lt;? extends E&gt; c)</span> </span>&#123;<br>    elementData = c.toArray();<br>    <span class="hljs-keyword">if</span> ((size = elementData.length) != <span class="hljs-number">0</span>) &#123;<br>        <span class="hljs-comment">// c.toArray might (incorrectly) not return Object[] (see 6260652)</span><br>        <span class="hljs-keyword">if</span> (elementData.getClass() != Object[].class)<br>            elementData = Arrays.copyOf(elementData, size, Object[].class);<br>    &#125; <span class="hljs-keyword">else</span> &#123;<br>        <span class="hljs-comment">// replace with empty array.</span><br>        <span class="hljs-keyword">this</span>.elementData = EMPTY_ELEMENTDATA;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+
+<h4 id="扩容机制"><a href="#扩容机制" class="headerlink" title="扩容机制"></a>扩容机制</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">ensureCapacity</span><span class="hljs-params">(<span class="hljs-keyword">int</span> minCapacity)</span> </span>&#123;<br>    <span class="hljs-keyword">int</span> minExpand = (elementData != DEFAULTCAPACITY_EMPTY_ELEMENTDATA)<br>        <span class="hljs-comment">// any size if not default element table</span><br>        ? <span class="hljs-number">0</span><br>        <span class="hljs-comment">// larger than default for default empty table. It&#x27;s already</span><br>        <span class="hljs-comment">// supposed to be at default size.</span><br>        : DEFAULT_CAPACITY;<br><br>    <span class="hljs-keyword">if</span> (minCapacity &gt; minExpand) &#123;<br>        ensureExplicitCapacity(minCapacity);<br>    &#125;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">int</span> <span class="hljs-title">calculateCapacity</span><span class="hljs-params">(Object[] elementData, <span class="hljs-keyword">int</span> minCapacity)</span> </span>&#123;<br>    <span class="hljs-keyword">if</span> (elementData == DEFAULTCAPACITY_EMPTY_ELEMENTDATA) &#123;<br>        <span class="hljs-keyword">return</span> Math.max(DEFAULT_CAPACITY, minCapacity);<br>    &#125;<br>    <span class="hljs-keyword">return</span> minCapacity;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title">ensureCapacityInternal</span><span class="hljs-params">(<span class="hljs-keyword">int</span> minCapacity)</span> </span>&#123;<br>    ensureExplicitCapacity(calculateCapacity(elementData, minCapacity));<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title">ensureExplicitCapacity</span><span class="hljs-params">(<span class="hljs-keyword">int</span> minCapacity)</span> </span>&#123;<br>    modCount++;<br><br>    <span class="hljs-comment">// overflow-conscious code</span><br>    <span class="hljs-keyword">if</span> (minCapacity - elementData.length &gt; <span class="hljs-number">0</span>)<br>        grow(minCapacity);<br>&#125;<br><br><br><span class="hljs-comment">// 扩容</span><br><span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title">grow</span><span class="hljs-params">(<span class="hljs-keyword">int</span> minCapacity)</span> </span>&#123;<br>        <span class="hljs-comment">// overflow-conscious code</span><br>        <span class="hljs-keyword">int</span> oldCapacity = elementData.length;<br>        <span class="hljs-keyword">int</span> newCapacity = oldCapacity + (oldCapacity &gt;&gt; <span class="hljs-number">1</span>);<br>        <span class="hljs-keyword">if</span> (newCapacity - minCapacity &lt; <span class="hljs-number">0</span>)<br>            newCapacity = minCapacity;<br>        <span class="hljs-keyword">if</span> (newCapacity - MAX_ARRAY_SIZE &gt; <span class="hljs-number">0</span>)<br>            newCapacity = hugeCapacity(minCapacity);<br>        <span class="hljs-comment">// minCapacity is usually close to size, so this is a win:</span><br>    <br>        elementData = Arrays.copyOf(elementData, newCapacity);<br>    &#125;<br><br>    <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">int</span> <span class="hljs-title">hugeCapacity</span><span class="hljs-params">(<span class="hljs-keyword">int</span> minCapacity)</span> </span>&#123;<br>        <span class="hljs-keyword">if</span> (minCapacity &lt; <span class="hljs-number">0</span>) <span class="hljs-comment">// overflow</span><br>            <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> OutOfMemoryError();<br>        <span class="hljs-keyword">return</span> (minCapacity &gt; MAX_ARRAY_SIZE) ?<br>            Integer.MAX_VALUE :<br>            MAX_ARRAY_SIZE;<br>    &#125;<br></code></pre></td></tr></table></figure>
+
+<p>扩容原理：</p>
+<p><img src="/2021/07/13/Java%E9%9B%86%E5%90%88%E6%A1%86%E6%9E%B6%E8%AF%A6%E8%A7%A3/image-20210712083255565.png" srcset="/img/loading.gif" lazyload alt="image-20210712083255565"></p>
+<p>如上图所示 ，集合每次添加一个元素会添加之后容量是否足够，如果不够的话进行扩容</p>
+<p>扩容的方式是</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs java">elementData = Arrays.copyOf(elementData, newCapacity);<br></code></pre></td></tr></table></figure>
+
+<p>数组操作是，是将老数组的元素全部拷贝一份到新数组中，每次数组容量增加大约是其源容量的1.5倍。这种操作代价高，所以在使用中，应该尽量避免数组扩容。当我们知道具体容量时，可以使用指定容量的构造方法进行创建。或者根据实际需求，通过调用ensureCapacity进行手动扩容。</p>
+<p>扩容图解</p>
+<p><img src="/2021/07/13/Java%E9%9B%86%E5%90%88%E6%A1%86%E6%9E%B6%E8%AF%A6%E8%A7%A3/image-20210712084807191.png" srcset="/img/loading.gif" lazyload alt="image-20210712084807191"></p>
+<h4 id="add-addAll添加方法"><a href="#add-addAll添加方法" class="headerlink" title="add  addAll添加方法"></a>add  addAll添加方法</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">add</span><span class="hljs-params">(E e)</span> </span>&#123;<br>   	<span class="hljs-comment">// 检测数组中容量是否足够  </span><br>    ensureCapacityInternal(size + <span class="hljs-number">1</span>);  <span class="hljs-comment">// Increments modCount!!</span><br>    elementData[size++] = e;<br>    <span class="hljs-keyword">return</span> <span class="hljs-keyword">true</span>;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">add</span><span class="hljs-params">(<span class="hljs-keyword">int</span> index, E element)</span> </span>&#123;<br>    <span class="hljs-comment">// 检查index是否可以添加元素 </span><br>    rangeCheckForAdd(index);<br>   	<span class="hljs-comment">// 校验容量是否足够 </span><br>    ensureCapacityInternal(size + <span class="hljs-number">1</span>);  <span class="hljs-comment">// Increments modCount!!</span><br>    <span class="hljs-comment">// 从某个位置进行插入 </span><br>    <span class="hljs-comment">// 需要位置之后的元素向后移动一个单位 </span><br>    System.arraycopy(elementData, index, elementData, index + <span class="hljs-number">1</span>,<br>                     size - index);<br>    <span class="hljs-comment">// 将数据赋值到指定位置 </span><br>    elementData[index] = element;<br>    size++;<br>&#125;<br><br><br><span class="hljs-comment">// 将数组拼接到结尾</span><br><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">addAll</span><span class="hljs-params">(Collection&lt;? extends E&gt; c)</span> </span>&#123;<br>        Object[] a = c.toArray();<br>        <span class="hljs-keyword">int</span> numNew = a.length;<br>        ensureCapacityInternal(size + numNew);  <span class="hljs-comment">// Increments modCount</span><br>        System.arraycopy(a, <span class="hljs-number">0</span>, elementData, size, numNew);<br>        size += numNew;<br>        <span class="hljs-keyword">return</span> numNew != <span class="hljs-number">0</span>;<br>&#125;<br><br><span class="hljs-comment">// 指定位置对接 </span><br><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">addAll</span><span class="hljs-params">(<span class="hljs-keyword">int</span> index, Collection&lt;? extends E&gt; c)</span> </span>&#123;<br>        rangeCheckForAdd(index);<br><br>        Object[] a = c.toArray();<br>        <span class="hljs-keyword">int</span> numNew = a.length;<br>        ensureCapacityInternal(size + numNew);  <span class="hljs-comment">// Increments modCount</span><br><br>        <span class="hljs-keyword">int</span> numMoved = size - index;<br>        <span class="hljs-keyword">if</span> (numMoved &gt; <span class="hljs-number">0</span>)<br>            System.arraycopy(elementData, index, elementData, index + numNew,numMoved);<br><br>        System.arraycopy(a, <span class="hljs-number">0</span>, elementData, index, numNew);<br>        size += numNew;<br>        <span class="hljs-keyword">return</span> numNew != <span class="hljs-number">0</span>;<br>&#125;<br><br></code></pre></td></tr></table></figure>
+
+
+
+<p> 添加的时候都会检测容量是否足够，如果不够的话进行扩容，扩容操作通过grow方法完成</p>
+<h4 id="romove"><a href="#romove" class="headerlink" title="romove"></a>romove</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-function"><span class="hljs-keyword">public</span> E <span class="hljs-title">remove</span><span class="hljs-params">(<span class="hljs-keyword">int</span> index)</span> </span>&#123;<br>    rangeCheck(index);<br>    checkForComodification();<br>    E result = parent.remove(parentOffset + index);<br>    <span class="hljs-keyword">this</span>.modCount = parent.modCount;<br>    <span class="hljs-keyword">this</span>.size--;<br>    <span class="hljs-keyword">return</span> result;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>对指定位置进行删除</p>
+<h4 id="set"><a href="#set" class="headerlink" title="set"></a>set</h4><blockquote>
+<p>较为简单，对指定位置进行赋值</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-function"><span class="hljs-keyword">public</span> E <span class="hljs-title">set</span><span class="hljs-params">(<span class="hljs-keyword">int</span> index, E element)</span> </span>&#123;<br>    rangeCheck(index);<br><br>    E oldValue = elementData(index);<br>    elementData[index] = element;<br>    <span class="hljs-keyword">return</span> oldValue;<br>&#125;<br><br></code></pre></td></tr></table></figure>
+
+
+
+<p>get方法</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-function"><span class="hljs-keyword">public</span> E <span class="hljs-title">get</span><span class="hljs-params">(<span class="hljs-keyword">int</span> index)</span> </span>&#123;<br>    rangeCheck(index);<br><br>    <span class="hljs-keyword">return</span> elementData(index);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>获取指定位置的元素</p>
+</blockquote>
+<h4 id="rimToSize"><a href="#rimToSize" class="headerlink" title="rimToSize"></a>rimToSize</h4><blockquote>
+<p>将底层数组长度调整为当前列表保存实际元素的大小 </p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">trimToSize</span><span class="hljs-params">()</span> </span>&#123;<br>    modCount++;<br>    <span class="hljs-comment">// 判断当前大小是不是小于数组总长度</span><br>    <span class="hljs-keyword">if</span> (size &lt; elementData.length) &#123;<br>        elementData = (size == <span class="hljs-number">0</span>)<br>          ? EMPTY_ELEMENTDATA<br>          : Arrays.copyOf(elementData, size);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+
+
+
+<h4 id="index-indexOf"><a href="#index-indexOf" class="headerlink" title="index   indexOf"></a>index   indexOf</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">// 从开头查找位置</span><br><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">indexOf</span><span class="hljs-params">(Object o)</span> </span>&#123;<br>    <span class="hljs-keyword">if</span> (o == <span class="hljs-keyword">null</span>) &#123;<br>        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; size; i++)<br>            <span class="hljs-keyword">if</span> (elementData[i]==<span class="hljs-keyword">null</span>)<br>                <span class="hljs-keyword">return</span> i;<br>    &#125; <span class="hljs-keyword">else</span> &#123;<br>        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; size; i++)<br>            <span class="hljs-keyword">if</span> (o.equals(elementData[i]))<br>                <span class="hljs-keyword">return</span> i;<br>    &#125;<br>    <span class="hljs-keyword">return</span> -<span class="hljs-number">1</span>;<br>&#125;<br><br><span class="hljs-comment">// 从数组结尾查找位置</span><br><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">lastIndexOf</span><span class="hljs-params">(Object o)</span> </span>&#123;<br>    <span class="hljs-keyword">if</span> (o == <span class="hljs-keyword">null</span>) &#123;<br>        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = size-<span class="hljs-number">1</span>; i &gt;= <span class="hljs-number">0</span>; i--)<br>            <span class="hljs-keyword">if</span> (elementData[i]==<span class="hljs-keyword">null</span>)<br>                <span class="hljs-keyword">return</span> i;<br>    &#125; <span class="hljs-keyword">else</span> &#123;<br>        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = size-<span class="hljs-number">1</span>; i &gt;= <span class="hljs-number">0</span>; i--)<br>            <span class="hljs-keyword">if</span> (o.equals(elementData[i]))<br>                <span class="hljs-keyword">return</span> i;<br>    &#125;<br>    <span class="hljs-keyword">return</span> -<span class="hljs-number">1</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>从开头查找位置和结尾查找位置</p>
+</blockquote>
+<h4 id="Fail-Fast机制"><a href="#Fail-Fast机制" class="headerlink" title="Fail-Fast机制:"></a>Fail-Fast机制:</h4><p>ArrayList也采用了快速失败的机制，通过记录modCount参数来实现。在面对并发的修改时，迭代器很快就会完全失败，而不是冒着在将来某个不确定时间发生任意不确定行为的风险。</p>
+<h3 id="LinkedList源码解析"><a href="#LinkedList源码解析" class="headerlink" title="LinkedList源码解析"></a>LinkedList源码解析</h3><h4 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h4><blockquote>
+<p>是什么    </p>
+<p>由链表构成的集合类</p>
+</blockquote>
+<h4 id="存储的数据类型"><a href="#存储的数据类型" class="headerlink" title="存储的数据类型"></a>存储的数据类型</h4><blockquote>
+<p>实现了List，序列化接口 ， 队列接口  ， 克隆接口 </p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">LinkedList</span>&lt;<span class="hljs-title">E</span>&gt;</span><br><span class="hljs-class">    <span class="hljs-keyword">extends</span> <span class="hljs-title">AbstractSequentialList</span>&lt;<span class="hljs-title">E</span>&gt;</span><br><span class="hljs-class">    <span class="hljs-keyword">implements</span> <span class="hljs-title">List</span>&lt;<span class="hljs-title">E</span>&gt;, <span class="hljs-title">Deque</span>&lt;<span class="hljs-title">E</span>&gt;, <span class="hljs-title">Cloneable</span>, <span class="hljs-title">java</span>.<span class="hljs-title">io</span>.<span class="hljs-title">Serializable</span></span><br><span class="hljs-class"></span>&#123;<br>    <span class="hljs-keyword">transient</span> <span class="hljs-keyword">int</span> size = <span class="hljs-number">0</span>;<br><br>    <span class="hljs-comment">/**</span><br><span class="hljs-comment">     * Pointer to first node.</span><br><span class="hljs-comment">     * Invariant: (first == null &amp;&amp; last == null) ||</span><br><span class="hljs-comment">     *            (first.prev == null &amp;&amp; first.item != null)</span><br><span class="hljs-comment">     */</span><br>    <span class="hljs-keyword">transient</span> Node&lt;E&gt; first;<br><br>    <span class="hljs-comment">/**</span><br><span class="hljs-comment">     * Pointer to last node.</span><br><span class="hljs-comment">     * Invariant: (first == null &amp;&amp; last == null) ||</span><br><span class="hljs-comment">     *            (last.next == null &amp;&amp; last.item != null)</span><br><span class="hljs-comment">     */</span><br>    <span class="hljs-keyword">transient</span> Node&lt;E&gt; last;<br><br><br><span class="hljs-comment">// 使用静态内部类Node存储数据</span><br><span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Node</span>&lt;<span class="hljs-title">E</span>&gt; </span>&#123;<br>    E item;<br>    Node&lt;E&gt; next;  <span class="hljs-comment">// 指向下一个指针</span><br>    Node&lt;E&gt; prev;  <span class="hljs-comment">// 指向前驱的指针 </span><br><br>    Node(Node&lt;E&gt; prev, E element, Node&lt;E&gt; next) &#123;<br>        <span class="hljs-keyword">this</span>.item = element;<br>        <span class="hljs-keyword">this</span>.next = next;<br>        <span class="hljs-keyword">this</span>.prev = prev;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+
+<h4 id="构造器"><a href="#构造器" class="headerlink" title="构造器"></a>构造器</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">LinkedList</span><span class="hljs-params">()</span> </span>&#123;<br>&#125;<br><br><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * Constructs a list containing the elements of the specified</span><br><span class="hljs-comment"> * collection, in the order they are returned by the collection&#x27;s</span><br><span class="hljs-comment"> * iterator.</span><br><span class="hljs-comment"> *</span><br><span class="hljs-comment"> * <span class="hljs-doctag">@param</span>  c the collection whose elements are to be placed into this list</span><br><span class="hljs-comment"> * <span class="hljs-doctag">@throws</span> NullPointerException if the specified collection is null</span><br><span class="hljs-comment"> */</span><br><span class="hljs-comment">// 调用空参构造器 </span><br><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">LinkedList</span><span class="hljs-params">(Collection&lt;? extends E&gt; c)</span> </span>&#123;<br>    <span class="hljs-keyword">this</span>();<br>    addAll(c);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+
+<h4 id="getFirst，getLast"><a href="#getFirst，getLast" class="headerlink" title="getFirst，getLast"></a>getFirst，getLast</h4><blockquote>
+<p>获取第一个元素  ， 获取最后一个元素 </p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">// 获取第一个 </span><br><span class="hljs-function"><span class="hljs-keyword">public</span> E <span class="hljs-title">getFirst</span><span class="hljs-params">()</span> </span>&#123;<br>    <span class="hljs-keyword">final</span> Node&lt;E&gt; f = first;<br>    <span class="hljs-keyword">if</span> (f == <span class="hljs-keyword">null</span>)<br>        <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> NoSuchElementException();<br>    <span class="hljs-keyword">return</span> f.item;<br>&#125;<br><br><span class="hljs-comment">// 获取最后一个 </span><br><span class="hljs-function"><span class="hljs-keyword">public</span> E <span class="hljs-title">getLast</span><span class="hljs-params">()</span> </span>&#123;<br>    <span class="hljs-keyword">final</span> Node&lt;E&gt; l = last;<br>    <span class="hljs-keyword">if</span> (l == <span class="hljs-keyword">null</span>)<br>        <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> NoSuchElementException();<br>    <span class="hljs-keyword">return</span> l.item;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>​    </p>
+<h4 id="removeFirst，removeLast，-remove-e-，remove-index"><a href="#removeFirst，removeLast，-remove-e-，remove-index" class="headerlink" title="removeFirst，removeLast， remove(e) ，remove(index)"></a>removeFirst，removeLast， remove(e) ，remove(index)</h4><p>remove有俩个版本，一个根据元素匹配，一个根据位置进行查询</p>
+<blockquote>
+<p>根据元素进行删除  判断是否是空值， 因为List中可以存储空值 </p>
+<p>删除统一用那个解除链接的方法，将被删除元素的指针删除，元素被删除之后得维护前驱和后继的链接关系</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">remove</span><span class="hljs-params">(Object o)</span> </span>&#123;<br>    <span class="hljs-keyword">if</span> (o == <span class="hljs-keyword">null</span>) &#123;<br>        <span class="hljs-keyword">for</span> (Node&lt;E&gt; x = first; x != <span class="hljs-keyword">null</span>; x = x.next) &#123;<br>            <span class="hljs-keyword">if</span> (x.item == <span class="hljs-keyword">null</span>) &#123;<br>                <span class="hljs-comment">// 取消链接</span><br>                unlink(x);<br>                <span class="hljs-keyword">return</span> <span class="hljs-keyword">true</span>;<br>            &#125;<br>        &#125;<br>    &#125; <span class="hljs-keyword">else</span> &#123;<br>        <span class="hljs-keyword">for</span> (Node&lt;E&gt; x = first; x != <span class="hljs-keyword">null</span>; x = x.next) &#123;<br>            <span class="hljs-keyword">if</span> (o.equals(x.item)) &#123;<br>                <span class="hljs-comment">// 取消链接 </span><br>                unlink(x);<br>                <span class="hljs-keyword">return</span> <span class="hljs-keyword">true</span>;<br>            &#125;<br>        &#125;<br>    &#125;<br>    <span class="hljs-keyword">return</span> <span class="hljs-keyword">false</span>;<br>&#125;<br><br><br><br><span class="hljs-function">E <span class="hljs-title">unlink</span><span class="hljs-params">(Node&lt;E&gt; x)</span> </span>&#123;<br>        <span class="hljs-comment">// assert x != null;</span><br>    	<span class="hljs-comment">// 获取元素 </span><br>        <span class="hljs-keyword">final</span> E element = x.item;<br>    	<span class="hljs-comment">// 赋值后继指针 </span><br>        <span class="hljs-keyword">final</span> Node&lt;E&gt; next = x.next;<br>    	<span class="hljs-comment">// 赋值前驱指针 </span><br>        <span class="hljs-keyword">final</span> Node&lt;E&gt; prev = x.prev;<br><br>        <span class="hljs-keyword">if</span> (prev == <span class="hljs-keyword">null</span>) &#123;<span class="hljs-comment">// 第一个元素</span><br>            first = next;<br>        &#125; <span class="hljs-keyword">else</span> &#123;<br>            prev.next = next;<br>            x.prev = <span class="hljs-keyword">null</span>;<br>        &#125;<br><br>        <span class="hljs-keyword">if</span> (next == <span class="hljs-keyword">null</span>) &#123;<span class="hljs-comment">// 最后一个元素</span><br>            last = prev;<br>        &#125; <span class="hljs-keyword">else</span> &#123;<br>            next.prev = prev;<br>            x.next = <span class="hljs-keyword">null</span>;<br>        &#125;<br><br>        x.item = <span class="hljs-keyword">null</span>; <span class="hljs-comment">// GC</span><br>        size--;<br>        modCount++;<br>        <span class="hljs-keyword">return</span> element;<br>    &#125;<br><br><br><span class="hljs-comment">// 先检查位置是否合理 不合理直接抛出异常 </span><br><span class="hljs-function"><span class="hljs-keyword">public</span> E <span class="hljs-title">remove</span><span class="hljs-params">(<span class="hljs-keyword">int</span> index)</span> </span>&#123;<br>    checkElementIndex(index);<br>    <span class="hljs-keyword">return</span> unlink(node(index));<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+
+<h4 id="删除图解"><a href="#删除图解" class="headerlink" title="删除图解"></a>删除图解</h4><p><img src="https://www.pdai.tech/_images/collection/LinkedList_remove.png" srcset="/img/loading.gif" lazyload alt="LinkedList_remove.png"></p>
+<p>删除开头元素和结尾元素最为简单，因为移动的指针很少 </p>
+<p>删除开头元素 </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-function"><span class="hljs-keyword">public</span> E <span class="hljs-title">removeFirst</span><span class="hljs-params">()</span> </span>&#123;<br>    <span class="hljs-keyword">final</span> Node&lt;E&gt; f = first;<br>    <span class="hljs-keyword">if</span> (f == <span class="hljs-keyword">null</span>)<br>        <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> NoSuchElementException();<br>    <span class="hljs-keyword">return</span> unlinkFirst(f);<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">public</span> E <span class="hljs-title">removeLast</span><span class="hljs-params">()</span> </span>&#123;<br>    <span class="hljs-keyword">final</span> Node&lt;E&gt; l = last;<br>    <span class="hljs-keyword">if</span> (l == <span class="hljs-keyword">null</span>)<br>        <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> NoSuchElementException();<br>    <span class="hljs-keyword">return</span> unlinkLast(l);<br>&#125;<br><span class="hljs-comment">//删除头节点</span><br><span class="hljs-function"><span class="hljs-keyword">private</span> E <span class="hljs-title">unlinkFirst</span><span class="hljs-params">(Node&lt;E&gt; f)</span> </span>&#123;<br>    <span class="hljs-comment">// assert f == first &amp;&amp; f != null;</span><br>    <span class="hljs-keyword">final</span> Eelement = f.item;<br>    <span class="hljs-keyword">final</span> Node&lt;E&gt; next = f.next;<br>    f.item = <span class="hljs-keyword">null</span>;<br>    f.next = <span class="hljs-keyword">null</span>; <span class="hljs-comment">// help GC</span><br>    <span class="hljs-comment">// 将头指针赋值给被删除元素的后继</span><br>    first = next;<br>    <span class="hljs-keyword">if</span> (next == <span class="hljs-keyword">null</span>)<br>        last = <span class="hljs-keyword">null</span>;<br>    <span class="hljs-keyword">else</span><br>        next.prev = <span class="hljs-keyword">null</span>;<br>    size--;<br>    modCount++;<br>    <span class="hljs-keyword">return</span> element;<br>&#125;<br><br><span class="hljs-comment">// 删除最后一个节点</span><br><span class="hljs-function"><span class="hljs-keyword">private</span> E <span class="hljs-title">unlinkLast</span><span class="hljs-params">(Node&lt;E&gt; l)</span> </span>&#123;<br>    <span class="hljs-comment">// assert l == last &amp;&amp; l != null;</span><br>    <span class="hljs-keyword">final</span> E element = l.item;<br>    <span class="hljs-keyword">final</span> Node&lt;E&gt; prev = l.prev;<br>    l.item = <span class="hljs-keyword">null</span>;<br>    l.prev = <span class="hljs-keyword">null</span>; <span class="hljs-comment">// help GC</span><br>    <span class="hljs-comment">// 将尾指针赋值给被删除元素的前驱</span><br>    last = prev;<br>    <span class="hljs-keyword">if</span> (prev == <span class="hljs-keyword">null</span>)<br>        first = <span class="hljs-keyword">null</span>;<br>    <span class="hljs-keyword">else</span><br>        prev.next = <span class="hljs-keyword">null</span>;<br>    size--;<br>    modCount++;<br>    <span class="hljs-keyword">return</span> element;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+
+<h4 id="add-，-addAll"><a href="#add-，-addAll" class="headerlink" title="add ， addAll"></a>add ， addAll</h4><blockquote>
+<p>add也是需要操作指针，不过这个模式是使用 尾插法进行添加的数据，最后插入的花费的时间较少</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">add</span><span class="hljs-params">(<span class="hljs-keyword">int</span> index, E element)</span> </span>&#123;<br>    checkPositionIndex(index);<br><br>    <span class="hljs-keyword">if</span> (index == size)<br>        linkLast(element);<br>    <span class="hljs-keyword">else</span><br>        linkBefore(element, node(index));<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">add</span><span class="hljs-params">(E e)</span> </span>&#123;<br>    linkLast(e);<br>    <span class="hljs-keyword">return</span> <span class="hljs-keyword">true</span>;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">linkLast</span><span class="hljs-params">(E e)</span> </span>&#123;<br>    <span class="hljs-keyword">final</span> Node&lt;E&gt; l = last;<br>    <span class="hljs-keyword">final</span> Node&lt;E&gt; newNode = <span class="hljs-keyword">new</span> Node&lt;&gt;(l, e, <span class="hljs-keyword">null</span>);<br>    last = newNode;<br>    <span class="hljs-keyword">if</span> (l == <span class="hljs-keyword">null</span>)<br>    first = newNode;<br>    <span class="hljs-keyword">else</span><br>    l.next = newNode;<br>    size++;<br>    modCount++;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+
+<h4 id="添加移动指针图解"><a href="#添加移动指针图解" class="headerlink" title="添加移动指针图解"></a>添加移动指针图解</h4><p><img src="https://www.pdai.tech/_images/collection/LinkedList_add.png" srcset="/img/loading.gif" lazyload alt="LinkedList_add"></p>
+<p>addAll方法</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">// 调用的重载的方法 </span><br><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">addAll</span><span class="hljs-params">(Collection&lt;? extends E&gt; c)</span> </span>&#123;<br>    <span class="hljs-keyword">return</span> addAll(size, c);<br>&#125;<br><br><span class="hljs-comment">// 使用位置  </span><br><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">addAll</span><span class="hljs-params">(<span class="hljs-keyword">int</span> index, Collection&lt;? extends E&gt; c)</span> </span>&#123;<br>   	<span class="hljs-comment">// 校验位置是否合理</span><br>    checkPositionIndex(index);<br><br>    <span class="hljs-comment">// </span><br>    Object[] a = c.toArray();<br>    <span class="hljs-keyword">int</span> numNew = a.length;<br>    <span class="hljs-keyword">if</span> (numNew == <span class="hljs-number">0</span>)<br>        <span class="hljs-keyword">return</span> <span class="hljs-keyword">false</span>;<br><br>    Node&lt;E&gt; pred, succ;<br>    <span class="hljs-keyword">if</span> (index == size) &#123;<br>        succ = <span class="hljs-keyword">null</span>;<br>        pred = last;<br>    &#125; <span class="hljs-keyword">else</span> &#123;<br>        succ = node(index);<br>        pred = succ.prev;<br>    &#125;<br><br>    <span class="hljs-keyword">for</span> (Object o : a) &#123;<br>        <span class="hljs-meta">@SuppressWarnings(&quot;unchecked&quot;)</span> E e = (E) o;<br>        Node&lt;E&gt; newNode = <span class="hljs-keyword">new</span> Node&lt;&gt;(pred, e, <span class="hljs-keyword">null</span>);<br>        <span class="hljs-keyword">if</span> (pred == <span class="hljs-keyword">null</span>)<br>            first = newNode;<br>        <span class="hljs-keyword">else</span><br>            pred.next = newNode;<br>        pred = newNode;<br>    &#125;<br><br>    <span class="hljs-keyword">if</span> (succ == <span class="hljs-keyword">null</span>) &#123;<br>        last = pred;<br>    &#125; <span class="hljs-keyword">else</span> &#123;<br>        pred.next = succ;<br>        succ.prev = pred;<br>    &#125;<br><br>    size += numNew;<br>    modCount++;<br>    <span class="hljs-keyword">return</span> <span class="hljs-keyword">true</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+
+<h4 id="clear"><a href="#clear" class="headerlink" title="clear"></a>clear</h4><blockquote>
+<p>清楚链表全部元素，方便GC回收</p>
+</blockquote>
+<h5 id="源码解析"><a href="#源码解析" class="headerlink" title="源码解析"></a>源码解析</h5><blockquote>
+<p>从头节点开始遍历，将全部的数据和节点都赋值为空，将大小置为空，将头尾指针赋值为空</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">clear</span><span class="hljs-params">()</span> </span>&#123;<br>    <span class="hljs-keyword">for</span> (Node&lt;E&gt; x = first; x != <span class="hljs-keyword">null</span>; ) &#123;<br>        Node&lt;E&gt; next = x.next;<br>        x.item = <span class="hljs-keyword">null</span>;<br>        x.next = <span class="hljs-keyword">null</span>;<br>        x.prev = <span class="hljs-keyword">null</span>;<br>        x = next;<br>    &#125;<br>    first = last = <span class="hljs-keyword">null</span>;<br>    size = <span class="hljs-number">0</span>;<br>    modCount++;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+
+<h4 id="Positional-Access-方法"><a href="#Positional-Access-方法" class="headerlink" title="Positional Access 方法"></a>Positional Access 方法</h4><h5 id="通过index获取元素"><a href="#通过index获取元素" class="headerlink" title="通过index获取元素"></a>通过index获取元素</h5><blockquote>
+<p>先校验index是否合理，合理之后进行迭代获取 ， 遍历采用二分查找 </p>
+</blockquote>
+<figure class="highlight axapta"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs axapta"><span class="hljs-comment">// 通过id获取数据 </span><br><span class="hljs-keyword">public</span> E get(<span class="hljs-built_in">int</span> <span class="hljs-keyword">index</span>) &#123;<br><span class="hljs-comment">// </span><br>    checkElementIndex(<span class="hljs-keyword">index</span>);<br>    <span class="hljs-keyword">return</span> node(<span class="hljs-keyword">index</span>).item;<br>&#125;<br><br>Node&lt;E&gt; node(<span class="hljs-built_in">int</span> <span class="hljs-keyword">index</span>) &#123;<br>    <span class="hljs-comment">// assert isElementIndex(index);</span><br><br>	<span class="hljs-comment">// 判断是否合理</span><br>	<span class="hljs-comment">// 二分法 通过判断位置是否大于中简单的数据 </span><br>    <span class="hljs-keyword">if</span> (<span class="hljs-keyword">index</span> &lt; (size &gt;&gt; <span class="hljs-number">1</span>)) &#123;<br>        Node&lt;E&gt; x = first;<br>        <span class="hljs-keyword">for</span> (<span class="hljs-built_in">int</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-keyword">index</span>; i++)<br>            x = x.<span class="hljs-keyword">next</span>;<br>        <span class="hljs-keyword">return</span> x;<br>    &#125; <span class="hljs-keyword">else</span> &#123;<br>    <span class="hljs-comment">// 大于从结尾查</span><br>        Node&lt;E&gt; x = last;<br>        <span class="hljs-keyword">for</span> (<span class="hljs-built_in">int</span> i = size - <span class="hljs-number">1</span>; i &gt; <span class="hljs-keyword">index</span>; i--)<br>            x = x.prev;<br>        <span class="hljs-keyword">return</span> x;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+
+<h4 id="对某个位置重新赋值"><a href="#对某个位置重新赋值" class="headerlink" title="对某个位置重新赋值"></a>对某个位置重新赋值</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-function"><span class="hljs-keyword">public</span> E <span class="hljs-title">set</span><span class="hljs-params">(<span class="hljs-keyword">int</span> index, E element)</span> </span>&#123;<br>    <span class="hljs-comment">// 校验长度是否合理</span><br>    checkElementIndex(index);<br>    Node&lt;E&gt; x = node(index);<br>    <span class="hljs-comment">// 获得修改前的值</span><br>    E oldVal = x.item;<br>    x.item = element;<br>    <span class="hljs-keyword">return</span> oldVal;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+
+<h4 id="根据index删除元素"><a href="#根据index删除元素" class="headerlink" title="根据index删除元素"></a>根据index删除元素</h4><blockquote>
+<p>先判断位置是否合理 ， 然后进行删除</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-function"><span class="hljs-keyword">public</span> E <span class="hljs-title">remove</span><span class="hljs-params">(<span class="hljs-keyword">int</span> index)</span> </span>&#123;<br>    checkElementIndex(index);<br>    <span class="hljs-keyword">return</span> unlink(node(index));<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+
+
+
+<h4 id="查找操作"><a href="#查找操作" class="headerlink" title="查找操作"></a>查找操作</h4><h5 id="indexOf"><a href="#indexOf" class="headerlink" title="indexOf"></a>indexOf</h5><blockquote>
+<p>通过元素查询位置  ， 定义一个count判断元素是否相等，返回count</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">indexOf</span><span class="hljs-params">(Object o)</span> </span>&#123;<br>    <span class="hljs-keyword">int</span> index = <span class="hljs-number">0</span>;<br>    <span class="hljs-keyword">if</span> (o == <span class="hljs-keyword">null</span>) &#123;<br>        <span class="hljs-keyword">for</span> (Node&lt;E&gt; x = first; x != <span class="hljs-keyword">null</span>; x = x.next) &#123;<br>            <span class="hljs-keyword">if</span> (x.item == <span class="hljs-keyword">null</span>)<br>                <span class="hljs-keyword">return</span> index;<br>            index++;<br>        &#125;<br>    &#125; <span class="hljs-keyword">else</span> &#123;<br>        <span class="hljs-keyword">for</span> (Node&lt;E&gt; x = first; x != <span class="hljs-keyword">null</span>; x = x.next) &#123;<br>            <span class="hljs-keyword">if</span> (o.equals(x.item))<br>                <span class="hljs-keyword">return</span> index;<br>            index++;<br>        &#125;<br>    &#125;<br>    <span class="hljs-keyword">return</span> -<span class="hljs-number">1</span>;<br>&#125;<br><br><br><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">lastIndexOf</span><span class="hljs-params">(Object o)</span> </span>&#123;<br>    <span class="hljs-keyword">int</span> index = size;<br>    <span class="hljs-keyword">if</span> (o == <span class="hljs-keyword">null</span>) &#123;<br>        <span class="hljs-keyword">for</span> (Node&lt;E&gt; x = last; x != <span class="hljs-keyword">null</span>; x = x.prev) &#123;<br>            index--;<br>            <span class="hljs-keyword">if</span> (x.item == <span class="hljs-keyword">null</span>)<br>                <span class="hljs-keyword">return</span> index;<br>        &#125;<br>    &#125; <span class="hljs-keyword">else</span> &#123;<br>        <span class="hljs-keyword">for</span> (Node&lt;E&gt; x = last; x != <span class="hljs-keyword">null</span>; x = x.prev) &#123;<br>            index--;<br>            <span class="hljs-keyword">if</span> (o.equals(x.item))<br>                <span class="hljs-keyword">return</span> index;<br>        &#125;<br>    &#125;<br>    <span class="hljs-keyword">return</span> -<span class="hljs-number">1</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+
+<h4 id="Queue方法"><a href="#Queue方法" class="headerlink" title="Queue方法"></a>Queue方法</h4><blockquote>
+<p>使用LinkedList做队列的方法 </p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-function"><span class="hljs-keyword">public</span> E <span class="hljs-title">peek</span><span class="hljs-params">()</span> </span>&#123;<br>    <span class="hljs-keyword">final</span> Node&lt;E&gt; f = first;<br>    <span class="hljs-keyword">return</span> (f == <span class="hljs-keyword">null</span>) ? <span class="hljs-keyword">null</span> : f.item;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">public</span> E <span class="hljs-title">element</span><span class="hljs-params">()</span> </span>&#123;<br>    <span class="hljs-keyword">return</span> getFirst();<br>&#125;<br><br><br><span class="hljs-function"><span class="hljs-keyword">public</span> E <span class="hljs-title">poll</span><span class="hljs-params">()</span> </span>&#123;<br>    <span class="hljs-keyword">final</span> Node&lt;E&gt; f = first;<br>    <span class="hljs-keyword">return</span> (f == <span class="hljs-keyword">null</span>) ? <span class="hljs-keyword">null</span> : unlinkFirst(f);<br>&#125;<br><br><br><span class="hljs-function"><span class="hljs-keyword">public</span> E <span class="hljs-title">remove</span><span class="hljs-params">()</span> </span>&#123;<br>    <span class="hljs-keyword">return</span> removeFirst();<br>&#125;<br><br><br><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">offer</span><span class="hljs-params">(E e)</span> </span>&#123;<br>    <span class="hljs-keyword">return</span> add(e);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+
+
+
+<h4 id="Deque方法-双端队列"><a href="#Deque方法-双端队列" class="headerlink" title="Deque方法  (双端队列)"></a>Deque方法  (双端队列)</h4><blockquote>
+<p>Linked实现了deque的接口 </p>
+</blockquote>
+<p>​    </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">offerFirst</span><span class="hljs-params">(E e)</span> </span>&#123;<br>    addFirst(e);<br>    <span class="hljs-keyword">return</span> <span class="hljs-keyword">true</span>;<br>&#125;<br><br><br><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">offerLast</span><span class="hljs-params">(E e)</span> </span>&#123;<br>    addLast(e);<br>    <span class="hljs-keyword">return</span> <span class="hljs-keyword">true</span>;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">public</span> E <span class="hljs-title">peekFirst</span><span class="hljs-params">()</span> </span>&#123;<br>    <span class="hljs-keyword">final</span> Node&lt;E&gt; f = first;<br>    <span class="hljs-keyword">return</span> (f == <span class="hljs-keyword">null</span>) ? <span class="hljs-keyword">null</span> : f.item;<br> &#125;<br><br><span class="hljs-function"><span class="hljs-keyword">public</span> E <span class="hljs-title">peekLast</span><span class="hljs-params">()</span> </span>&#123;<br>    <span class="hljs-keyword">final</span> Node&lt;E&gt; l = last;<br>    <span class="hljs-keyword">return</span> (l == <span class="hljs-keyword">null</span>) ? <span class="hljs-keyword">null</span> : l.item;<br>&#125;<br><br><br><span class="hljs-function"><span class="hljs-keyword">public</span> E <span class="hljs-title">pollFirst</span><span class="hljs-params">()</span> </span>&#123;<br>    <span class="hljs-keyword">final</span> Node&lt;E&gt; f = first;<br>    <span class="hljs-keyword">return</span> (f == <span class="hljs-keyword">null</span>) ? <span class="hljs-keyword">null</span> : unlinkFirst(f);<br>&#125;<br><br><br><span class="hljs-function"><span class="hljs-keyword">public</span> E <span class="hljs-title">pollLast</span><span class="hljs-params">()</span> </span>&#123;<br>    <span class="hljs-keyword">final</span> Node&lt;E&gt; l = last;<br>    <span class="hljs-keyword">return</span> (l == <span class="hljs-keyword">null</span>) ? <span class="hljs-keyword">null</span> : unlinkLast(l);<br>&#125;<br><br><br><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">push</span><span class="hljs-params">(E e)</span> </span>&#123;<br>    addFirst(e);<br>&#125;<br><br><br><span class="hljs-function"><span class="hljs-keyword">public</span> E <span class="hljs-title">pop</span><span class="hljs-params">()</span> </span>&#123;<br>    <span class="hljs-keyword">return</span> removeFirst();<br>&#125;<br><br><br><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">removeFirstOccurrence</span><span class="hljs-params">(Object o)</span> </span>&#123;<br>    <span class="hljs-keyword">return</span> remove(o);<br>&#125;<br><br><br><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">removeLastOccurrence</span><span class="hljs-params">(Object o)</span> </span>&#123;<br>    <span class="hljs-keyword">if</span> (o == <span class="hljs-keyword">null</span>) &#123;<br>        <span class="hljs-keyword">for</span> (Node&lt;E&gt; x = last; x != <span class="hljs-keyword">null</span>; x = x.prev) &#123;<br>            <span class="hljs-keyword">if</span> (x.item == <span class="hljs-keyword">null</span>) &#123;<br>                unlink(x);<br>                <span class="hljs-keyword">return</span> <span class="hljs-keyword">true</span>;<br>            &#125;<br>        &#125;<br>    &#125; <span class="hljs-keyword">else</span> &#123;<br>        <span class="hljs-keyword">for</span> (Node&lt;E&gt; x = last; x != <span class="hljs-keyword">null</span>; x = x.prev) &#123;<br>            <span class="hljs-keyword">if</span> (o.equals(x.item)) &#123;<br>                unlink(x);<br>                <span class="hljs-keyword">return</span> <span class="hljs-keyword">true</span>;<br>            &#125;<br>        &#125;<br>    &#125;<br>    <span class="hljs-keyword">return</span> <span class="hljs-keyword">false</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+
+<h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><blockquote>
+<p>关于栈或队列，现在的首选是<em>ArrayDeque</em>，它有着比<em>LinkedList</em>(当作栈或队列使用时)有着更好的性能。</p>
+</blockquote>
+<h3 id="Stack-amp-Queue源码解析"><a href="#Stack-amp-Queue源码解析" class="headerlink" title="Stack &amp;  Queue源码解析"></a>Stack &amp;  Queue源码解析</h3><h5 id="概述-1"><a href="#概述-1" class="headerlink" title="概述"></a>概述</h5><blockquote>
+<p>Java里有一个Stack的类 ，却没有一个Queue的类(只有一个接口)。官方不推荐使用Stack，而是推荐使用高效的ArrayDuque；虽然Queue只是一个接口，当需要使用队列时也就首选了ArrayDuque 次选时 LinkedList</p>
+</blockquote>
+<h3 id="Priority-Queue源码解析"><a href="#Priority-Queue源码解析" class="headerlink" title="Priority  Queue源码解析"></a>Priority  Queue源码解析</h3><h5 id="概述-2"><a href="#概述-2" class="headerlink" title="概述"></a>概述</h5><h3 id="HashSet-amp-HashMap源码解析"><a href="#HashSet-amp-HashMap源码解析" class="headerlink" title="HashSet  &amp;  HashMap源码解析"></a>HashSet  &amp;  HashMap源码解析</h3><h4 id="概述-3"><a href="#概述-3" class="headerlink" title="概述"></a>概述</h4><blockquote>
+<p>由于HashSet底层还是使用的是HashMap所以主谈HashMap</p>
+</blockquote>
+<p>查看源码得知 :  HashSet本质就是使用HashMap的Key特性创建而成 </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">HashSet</span>&lt;<span class="hljs-title">E</span>&gt;</span><br><span class="hljs-class">    <span class="hljs-keyword">extends</span> <span class="hljs-title">AbstractSet</span>&lt;<span class="hljs-title">E</span>&gt;</span><br><span class="hljs-class">    <span class="hljs-keyword">implements</span> <span class="hljs-title">Set</span>&lt;<span class="hljs-title">E</span>&gt;, <span class="hljs-title">Cloneable</span>, <span class="hljs-title">java</span>.<span class="hljs-title">io</span>.<span class="hljs-title">Serializable</span></span><br><span class="hljs-class"></span>&#123;<br>    <span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> <span class="hljs-keyword">long</span> serialVersionUID = -<span class="hljs-number">5024744406713321676L</span>;<br><br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">transient</span> HashMap&lt;E,Object&gt; map;<br><br>    <span class="hljs-comment">// Dummy value to associate with an Object in the backing Map</span><br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> Object PRESENT = <span class="hljs-keyword">new</span> Object();<br><br>    <span class="hljs-comment">/**</span><br><span class="hljs-comment">     * Constructs a new, empty set; the backing &lt;tt&gt;HashMap&lt;/tt&gt; instance has</span><br><span class="hljs-comment">     * default initial capacity (16) and load factor (0.75).</span><br><span class="hljs-comment">     */</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">HashSet</span><span class="hljs-params">()</span> </span>&#123;<br>        map = <span class="hljs-keyword">new</span> HashMap&lt;&gt;();<br>    &#125;<br><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">HashSet</span><span class="hljs-params">(Collection&lt;? extends E&gt; c)</span> </span>&#123;<br>        map = <span class="hljs-keyword">new</span> HashMap&lt;&gt;(Math.max((<span class="hljs-keyword">int</span>) (c.size()/<span class="hljs-number">.75f</span>) + <span class="hljs-number">1</span>, <span class="hljs-number">16</span>));<br>        addAll(c);<br>    &#125;<br></code></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+<h4 id="HashMap用什么结构存储数据"><a href="#HashMap用什么结构存储数据" class="headerlink" title="HashMap用什么结构存储数据"></a>HashMap用什么结构存储数据</h4><blockquote>
+<p>Java8 对 HashMap 进行了一些修改，最大的不同就是利用了红黑树，所以其由 <strong>数组+链表+红黑树</strong> 组成。</p>
+<p>根据 Java7 HashMap 的介绍，我们知道，查找的时候，根据 hash 值我们能够快速定位到数组的具体下标，但是之后的话，需要顺着链表一个个比较下去才能找到我们需要的，时间复杂度取决于链表的长度，为 O(n)。</p>
+<p>为了降低这部分的开销，在 Java8 中，当链表中的元素达到了 8 个时，会将链表转换为红黑树，在这些位置进行查找的时候可以降低时间复杂度为 O(logN)。</p>
+</blockquote>
+<h4 id="HashMap结构图"><a href="#HashMap结构图" class="headerlink" title="HashMap结构图"></a>HashMap结构图</h4><p><img src="https://www.pdai.tech/_images/java/java-collection-hashmap8.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>源码 </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">// 初始化容量</span><br><span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> <span class="hljs-keyword">int</span> DEFAULT_INITIAL_CAPACITY = <span class="hljs-number">1</span> &lt;&lt; <span class="hljs-number">4</span>; <span class="hljs-comment">// aka 16</span><br><br><span class="hljs-comment">// 最大容量</span><br><span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> <span class="hljs-keyword">int</span> MAXIMUM_CAPACITY = <span class="hljs-number">1</span> &lt;&lt; <span class="hljs-number">30</span>;<br><br><span class="hljs-comment">// 加载因子</span><br><span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> <span class="hljs-keyword">float</span> DEFAULT_LOAD_FACTOR = <span class="hljs-number">0.75f</span>;<br><br><span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> <span class="hljs-keyword">int</span> TREEIFY_THRESHOLD = <span class="hljs-number">8</span>;<br><br><span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> <span class="hljs-keyword">int</span> UNTREEIFY_THRESHOLD = <span class="hljs-number">6</span>;<br><br><span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> <span class="hljs-keyword">int</span> MIN_TREEIFY_CAPACITY = <span class="hljs-number">64</span>;<br><br><span class="hljs-comment">// 使用内部类Node进行存储 ， 实现了 Entry接口 </span><br><span class="hljs-keyword">static</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Node</span>&lt;<span class="hljs-title">K</span>,<span class="hljs-title">V</span>&gt; <span class="hljs-keyword">implements</span> <span class="hljs-title">Map</span>.<span class="hljs-title">Entry</span>&lt;<span class="hljs-title">K</span>,<span class="hljs-title">V</span>&gt; </span>&#123;<br>    <span class="hljs-keyword">final</span> <span class="hljs-keyword">int</span> hash;<br>    <span class="hljs-keyword">final</span> K key;<br>    V value;<br>    Node&lt;K,V&gt; next;<br><br>    Node(<span class="hljs-keyword">int</span> hash, K key, V value, Node&lt;K,V&gt; next) &#123;<br>        <span class="hljs-keyword">this</span>.hash = hash;<br>        <span class="hljs-keyword">this</span>.key = key;<br>        <span class="hljs-keyword">this</span>.value = value;<br>        <span class="hljs-keyword">this</span>.next = next;<br>    &#125;<br><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">final</span> K <span class="hljs-title">getKey</span><span class="hljs-params">()</span>        </span>&#123; <span class="hljs-keyword">return</span> key; &#125;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">final</span> V <span class="hljs-title">getValue</span><span class="hljs-params">()</span>      </span>&#123; <span class="hljs-keyword">return</span> value; &#125;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">final</span> String <span class="hljs-title">toString</span><span class="hljs-params">()</span> </span>&#123; <span class="hljs-keyword">return</span> key + <span class="hljs-string">&quot;=&quot;</span> + value; &#125;<br><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">final</span> <span class="hljs-keyword">int</span> <span class="hljs-title">hashCode</span><span class="hljs-params">()</span> </span>&#123;<br>        <span class="hljs-keyword">return</span> Objects.hashCode(key) ^ Objects.hashCode(value);<br>    &#125;<br><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">final</span> V <span class="hljs-title">setValue</span><span class="hljs-params">(V newValue)</span> </span>&#123;<br>        V oldValue = value;<br>        value = newValue;<br>        <span class="hljs-keyword">return</span> oldValue;<br>    &#125;<br><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">final</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">equals</span><span class="hljs-params">(Object o)</span> </span>&#123;<br>        <span class="hljs-keyword">if</span> (o == <span class="hljs-keyword">this</span>)<br>            <span class="hljs-keyword">return</span> <span class="hljs-keyword">true</span>;<br>        <span class="hljs-keyword">if</span> (o <span class="hljs-keyword">instanceof</span> Map.Entry) &#123;<br>            Map.Entry&lt;?,?&gt; e = (Map.Entry&lt;?,?&gt;)o;<br>            <span class="hljs-keyword">if</span> (Objects.equals(key, e.getKey()) &amp;&amp;<br>                Objects.equals(value, e.getValue()))<br>                <span class="hljs-keyword">return</span> <span class="hljs-keyword">true</span>;<br>        &#125;<br>        <span class="hljs-keyword">return</span> <span class="hljs-keyword">false</span>;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>由图得知，HashMap用静态内部类node存储数据 </p>
+<h4 id="put方法"><a href="#put方法" class="headerlink" title="put方法"></a>put方法</h4><blockquote>
+<p>总结： 因为HashMap是第一次put值的时候进行初始化，所以要判断是否是第一次put值</p>
+<p>2 判断散列的位置有没有值 如果没有的话，将数据放入当前位置 </p>
+<p>3 判断key是否相等，判断hash值是否相等  如果先等的话，直接进行覆盖操作 </p>
+<p>4 判断节点是不是红黑树，如果是的话，直接进行创建</p>
+<p>5 遍历单链表 判断有没有相同的key如果相同的话，直接进行覆盖，不是的话进行尾插法插入新节点</p>
+<p>6 判断增加有么有过阈值如果超过了阈值就进行扩容</p>
+<p>和 Java7 稍微有点不一样的地方就是，Java7 是先扩容后插入新值的，Java8 先插值再扩容，不过这个不重要。</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-function"><span class="hljs-keyword">public</span> V <span class="hljs-title">put</span><span class="hljs-params">(K key, V value)</span> </span>&#123;<br>    <span class="hljs-keyword">return</span> putVal(hash(key), key, value, <span class="hljs-keyword">false</span>, <span class="hljs-keyword">true</span>);<br>&#125;<br><br><br><span class="hljs-comment">// 第四个参数 onlyIfAbsent 如果是 true，那么只有在不存在该 key 时才会进行 put 操作</span><br><span class="hljs-comment">// 第五个参数 evict 我们这里不关心</span><br><span class="hljs-function"><span class="hljs-keyword">final</span> V <span class="hljs-title">putVal</span><span class="hljs-params">(<span class="hljs-keyword">int</span> hash, K key, V value, <span class="hljs-keyword">boolean</span> onlyIfAbsent,</span></span><br><span class="hljs-params"><span class="hljs-function">               <span class="hljs-keyword">boolean</span> evict)</span> </span>&#123;<br>    <br>    Node&lt;K,V&gt;[] tab; Node&lt;K,V&gt; p; <span class="hljs-keyword">int</span> n, i;<br>   <span class="hljs-comment">// 判断是不是第一次put值</span><br>    <span class="hljs-keyword">if</span> ((tab = table) == <span class="hljs-keyword">null</span> || (n = tab.length) == <span class="hljs-number">0</span>)<br>       <span class="hljs-comment">// 将将resize初始化的值赋值给tab, 将长度给n</span><br>        n = (tab = resize()).length;<br>    <span class="hljs-comment">// 判断hash之后的位置有没有值   如果没有的话创建Node赋值</span><br>    <span class="hljs-keyword">if</span> ((p = tab[i = (n - <span class="hljs-number">1</span>) &amp; hash]) == <span class="hljs-keyword">null</span>)<br>        tab[i] = newNode(hash, key, value, <span class="hljs-keyword">null</span>);<br>    <span class="hljs-keyword">else</span> &#123;<br>        <span class="hljs-comment">// 进入这里表示hash出来的位置有值</span><br>        Node&lt;K,V&gt; e; K k;<br>        <span class="hljs-comment">// 将之前查找到的位置的数据值 进行Hash比较 传入的key比较</span><br>        <span class="hljs-keyword">if</span> (p.hash == hash &amp;&amp;((k = p.key) == key || (key != <span class="hljs-keyword">null</span> &amp;&amp; key.equals(k))))<br>           	<span class="hljs-comment">// 表示key相等  进行覆盖操作  </span><br>            e = p;<br>        <span class="hljs-comment">// 判断是不是树节点</span><br>        <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (p <span class="hljs-keyword">instanceof</span> TreeNode)<br>            e = ((TreeNode&lt;K,V&gt;)p).putTreeVal(<span class="hljs-keyword">this</span>, tab, hash, key, value);<br>        <span class="hljs-keyword">else</span> &#123;<br>            <span class="hljs-comment">// 到这里说明当前节点是单链表</span><br>            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> binCount = <span class="hljs-number">0</span>; ; ++binCount) &#123;<br>                <span class="hljs-comment">// 遍历到尾部进行插入操作 </span><br>                <span class="hljs-keyword">if</span> ((e = p.next) == <span class="hljs-keyword">null</span>) &#123;<br>                    <span class="hljs-comment">// 使用尾插法进行节点插入</span><br>                    p.next = newNode(hash, key, value, <span class="hljs-keyword">null</span>);<br>                    <span class="hljs-comment">// 如果binCunt == 8的话 就要转换为红黑树</span><br>                    <span class="hljs-keyword">if</span> (binCount &gt;= TREEIFY_THRESHOLD - <span class="hljs-number">1</span>) <span class="hljs-comment">// -1 for 1st</span><br>                        treeifyBin(tab, hash);<br>                    <span class="hljs-keyword">break</span>;<br>                &#125;<br>                <span class="hljs-comment">// 如果找到两块相同的地址 </span><br>                <span class="hljs-keyword">if</span> (e.hash == hash &amp;&amp;<br>                    ((k = e.key) == key || (key != <span class="hljs-keyword">null</span> &amp;&amp; key.equals(k))))<br>                    <span class="hljs-comment">// 此时 break，那么 e 为链表中[与要插入的新值的 key &quot;相等&quot;]的 node</span><br>                    <span class="hljs-keyword">break</span>;<br>                p = e;<br>            &#125;<br>        &#125;<br>        <span class="hljs-keyword">if</span> (e != <span class="hljs-keyword">null</span>) &#123; <span class="hljs-comment">// existing mapping for key</span><br>           <span class="hljs-comment">// 将e的值取出来</span><br>            V oldValue = e.value;<br>            <span class="hljs-keyword">if</span> (!onlyIfAbsent || oldValue == <span class="hljs-keyword">null</span>)<br>                <span class="hljs-comment">// 将新值替换掉</span><br>                e.value = value;<br>            afterNodeAccess(e);<br>            <span class="hljs-comment">// 返回老值</span><br>            <span class="hljs-keyword">return</span> oldValue;<br>        &#125;<br>    &#125;<br>    ++modCount;<br>    <span class="hljs-comment">// 如果加入的之后的size大于阈值之后应该进行扩容</span><br>    <span class="hljs-keyword">if</span> (++size &gt; threshold)<br>        resize();<br>    afterNodeInsertion(evict);<br>    <span class="hljs-keyword">return</span> <span class="hljs-keyword">null</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+
+
+
+<p>数组扩容</p>
+<blockquote>
+<p>流程 ： 判断是否超过阈值 超过了进行扩容 </p>
+<p>结论 ： 每次扩容后为原来的2倍</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">final</span> Node&lt;K,V&gt;[] resize() &#123;<br>    <span class="hljs-comment">// 将原先数据进行拷贝 </span><br>    Node&lt;K,V&gt;[] oldTab = table;<br>    <span class="hljs-comment">// 判断之前的表是否为空 获取原表的容量 </span><br>    <span class="hljs-keyword">int</span> oldCap = (oldTab == <span class="hljs-keyword">null</span>) ? <span class="hljs-number">0</span> : oldTab.length;<br>    <span class="hljs-comment">// 获取原表的阈值</span><br>    <span class="hljs-keyword">int</span> oldThr = threshold;<br>    <span class="hljs-keyword">int</span> newCap, newThr = <span class="hljs-number">0</span>;<br>    <span class="hljs-keyword">if</span> (oldCap &gt; <span class="hljs-number">0</span>) &#123;<br>        <span class="hljs-comment">// 判断是否大于最大容量</span><br>        <span class="hljs-keyword">if</span> (oldCap &gt;= MAXIMUM_CAPACITY) &#123;<br>            <span class="hljs-comment">// 将最大值赋值给阈值</span><br>            threshold = Integer.MAX_VALUE;<br>            <span class="hljs-keyword">return</span> oldTab;<br>        &#125;<br>        <span class="hljs-comment">// 不是的话新容量 =  旧容量 * 2</span><br>        <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> ((newCap = oldCap &lt;&lt; <span class="hljs-number">1</span>) &lt; MAXIMUM_CAPACITY &amp;&amp;<br>                 oldCap &gt;= DEFAULT_INITIAL_CAPACITY)<br>            <span class="hljs-comment">// 双倍阈值</span><br>            newThr = oldThr &lt;&lt; <span class="hljs-number">1</span>; <span class="hljs-comment">// double threshold</span><br>    &#125;<br>    <span class="hljs-comment">// 对应使用 new HashMap(int initialCapacity) 初始化后，第一次 put 的时候</span><br>    <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (oldThr &gt; <span class="hljs-number">0</span>) <span class="hljs-comment">// initial capacity was placed in threshold</span><br>        newCap = oldThr;<br>    <span class="hljs-comment">// 对应使用 new HashMap() 初始化后，第一次 put 的时候</span><br>    <span class="hljs-keyword">else</span> &#123;               <span class="hljs-comment">// zero initial threshold signifies using defaults</span><br>        newCap = DEFAULT_INITIAL_CAPACITY;<br>        newThr = (<span class="hljs-keyword">int</span>)(DEFAULT_LOAD_FACTOR * DEFAULT_INITIAL_CAPACITY);<br>    &#125;<br>    <span class="hljs-keyword">if</span> (newThr == <span class="hljs-number">0</span>) &#123;<br>        <span class="hljs-comment">// 计算新的阈值  =  新容量  *  加载因子0.75</span><br>        <span class="hljs-keyword">float</span> ft = (<span class="hljs-keyword">float</span>)newCap * loadFactor;<br>        newThr = (newCap &lt; MAXIMUM_CAPACITY &amp;&amp; ft &lt; (<span class="hljs-keyword">float</span>)MAXIMUM_CAPACITY ?<br>                  (<span class="hljs-keyword">int</span>)ft : Integer.MAX_VALUE);<br>    &#125;<br>    <span class="hljs-comment">// 赋值新阈值 </span><br>    threshold = newThr;<br>    <span class="hljs-comment">//@SuppressWarnings 批注允许您选择性地取消特定代码段（即，类或方法）中的警告。其中的想法是当您看到警告时，您将调查它，如果您确定它不是问题，</span><br>    <span class="hljs-meta">@SuppressWarnings(&#123;&quot;rawtypes&quot;,&quot;unchecked&quot;&#125;)</span><br>    <br>    <span class="hljs-comment">// 使用新容量创建表 </span><br>    Node&lt;K,V&gt;[] newTab = (Node&lt;K,V&gt;[])<span class="hljs-keyword">new</span> Node[newCap];<br>    table = newTab;<br>    <span class="hljs-comment">// 将数据遍历 存入新表中并返回</span><br>    <span class="hljs-keyword">if</span> (oldTab != <span class="hljs-keyword">null</span>) &#123;<br>        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> j = <span class="hljs-number">0</span>; j &lt; oldCap; ++j) &#123;<br>            Node&lt;K,V&gt; e;<br>            <span class="hljs-keyword">if</span> ((e = oldTab[j]) != <span class="hljs-keyword">null</span>) &#123;<br>                oldTab[j] = <span class="hljs-keyword">null</span>;<br>                <span class="hljs-keyword">if</span> (e.next == <span class="hljs-keyword">null</span>)<br>                    newTab[e.hash &amp; (newCap - <span class="hljs-number">1</span>)] = e;<br>                <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (e <span class="hljs-keyword">instanceof</span> TreeNode)<br>                    ((TreeNode&lt;K,V&gt;)e).split(<span class="hljs-keyword">this</span>, newTab, j, oldCap);<br>                <span class="hljs-keyword">else</span> &#123; <span class="hljs-comment">// preserve order</span><br>                    Node&lt;K,V&gt; loHead = <span class="hljs-keyword">null</span>, loTail = <span class="hljs-keyword">null</span>;<br>                    Node&lt;K,V&gt; hiHead = <span class="hljs-keyword">null</span>, hiTail = <span class="hljs-keyword">null</span>;<br>                    Node&lt;K,V&gt; next;<br>                    <span class="hljs-keyword">do</span> &#123;<br>                        next = e.next;<br>                        <span class="hljs-keyword">if</span> ((e.hash &amp; oldCap) == <span class="hljs-number">0</span>) &#123;<br>                            <span class="hljs-keyword">if</span> (loTail == <span class="hljs-keyword">null</span>)<br>                                loHead = e;<br>                            <span class="hljs-keyword">else</span><br>                                loTail.next = e;<br>                            loTail = e;<br>                        &#125;<br>                        <span class="hljs-keyword">else</span> &#123;<br>                            <span class="hljs-keyword">if</span> (hiTail == <span class="hljs-keyword">null</span>)<br>                                hiHead = e;<br>                            <span class="hljs-keyword">else</span><br>                                hiTail.next = e;<br>                            hiTail = e;<br>                        &#125;<br>                    &#125; <span class="hljs-keyword">while</span> ((e = next) != <span class="hljs-keyword">null</span>);<br>                    <span class="hljs-keyword">if</span> (loTail != <span class="hljs-keyword">null</span>) &#123;<br>                        loTail.next = <span class="hljs-keyword">null</span>;<br>                        newTab[j] = loHead;<br>                    &#125;<br>                    <span class="hljs-keyword">if</span> (hiTail != <span class="hljs-keyword">null</span>) &#123;<br>                        hiTail.next = <span class="hljs-keyword">null</span>;<br>                        newTab[j + oldCap] = hiHead;<br>                    &#125;<br>                &#125;<br>            &#125;<br>        &#125;<br>    &#125;<br>    <span class="hljs-keyword">return</span> newTab;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+
+
+
+<h4 id="get方法"><a href="#get方法" class="headerlink" title="get方法"></a>get方法</h4><blockquote>
+<p>流程 : </p>
+<p>判断hash值是否为空 为空直接返回空 </p>
+<p>判断 // 判断表是否为空, 长度是否小于0, hash散列出来的位置是否有数据</p>
+<p>判断hash是否相等, 判断key是否相等, 判断key的值是否相等</p>
+<p>如果同一位置都不为空的话 , 就直接为</p>
+<p>结论 : </p>
+</blockquote>
+<p>源码解析 </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-function"><span class="hljs-keyword">public</span> V <span class="hljs-title">get</span><span class="hljs-params">(Object key)</span> </span>&#123;<br>    Node&lt;K,V&gt; e;<br>    <span class="hljs-keyword">return</span> (e = getNode(hash(key), key)) == <span class="hljs-keyword">null</span> ? <span class="hljs-keyword">null</span> : e.value;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">final</span> Node&lt;K,V&gt; <span class="hljs-title">getNode</span><span class="hljs-params">(<span class="hljs-keyword">int</span> hash, Object key)</span> </span>&#123;<br>    <span class="hljs-comment">// </span><br>    Node&lt;K,V&gt;[] tab; Node&lt;K,V&gt; first, e; <span class="hljs-keyword">int</span> n; K k<br>    <span class="hljs-comment">// 判断表是否为空, 长度是否小于0, hash散列出来的位置是否有数据</span><br>    <span class="hljs-keyword">if</span> ((tab = table) != <span class="hljs-keyword">null</span> &amp;&amp; (n = tab.length) &gt; <span class="hljs-number">0</span> &amp;&amp;<br>        (first = tab[(n - <span class="hljs-number">1</span>) &amp; hash]) != <span class="hljs-keyword">null</span>) &#123;<br>        <span class="hljs-comment">// 判断hash是否相等, 判断key是否相等, 判断key的值是否相等</span><br>        <span class="hljs-keyword">if</span> (first.hash == hash &amp;&amp; <span class="hljs-comment">// always check first node</span><br>            ((k = first.key) == key || (key != <span class="hljs-keyword">null</span> &amp;&amp; key.equals(k))))<br>            <span class="hljs-comment">// 返回阶段first</span><br>            <span class="hljs-keyword">return</span> first;<br>        <span class="hljs-comment">// 表示是单链表或者是树结构</span><br>        <span class="hljs-keyword">if</span> ((e = first.next) != <span class="hljs-keyword">null</span>) &#123;<br>            <span class="hljs-comment">// 判断是否是树节点 </span><br>            <span class="hljs-keyword">if</span> (first <span class="hljs-keyword">instanceof</span> TreeNode)<br>                <span class="hljs-keyword">return</span> ((TreeNode&lt;K,V&gt;)first).getTreeNode(hash, key);<br>            <br>            <span class="hljs-keyword">do</span> &#123;<br>                <span class="hljs-comment">// 遍历单链表寻找相同的值</span><br>                <span class="hljs-keyword">if</span> (e.hash == hash &amp;&amp;<br>                    ((k = e.key) == key || (key != <span class="hljs-keyword">null</span> &amp;&amp; key.equals(k))))<br>                    <span class="hljs-keyword">return</span> e;<br>            &#125; <span class="hljs-keyword">while</span> ((e = e.next) != <span class="hljs-keyword">null</span>);<br>        &#125;<br>    &#125;<br>    <span class="hljs-keyword">return</span> <span class="hljs-keyword">null</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+
+
+
+<h3 id="TreeSet-amp-TreeMap-源码解析"><a href="#TreeSet-amp-TreeMap-源码解析" class="headerlink" title="TreeSet  &amp;  TreeMap 源码解析"></a>TreeSet  &amp;  TreeMap 源码解析</h3><h4 id="概述-4"><a href="#概述-4" class="headerlink" title="概述"></a>概述</h4><blockquote>
+<p>之所以把TreeSet和 TreeMap一起讲, 应为二者在java中有着相同的实现,前者只是对后者进行了一层包装,也就是说TreeSet里面有一个TreeMap(适配器模式). </p>
+</blockquote>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/JavaSe/">JavaSe</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2021/07/13/Java%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Java并发编程</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2021/07/13/activiti%E5%AD%A6%E4%B9%A0/">
+                        <span class="hidden-mobile">activiti学习</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.3/dist/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.1/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.8/dist/clipboard.min.js" ></script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>

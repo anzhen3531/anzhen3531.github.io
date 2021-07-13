@@ -185,7 +185,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      3.9k 字
+      4.7k 字
     </span>
   
 
@@ -195,7 +195,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      61
+      71
        分钟
     </span>
   
@@ -354,6 +354,81 @@
 
 
 <p>总结 ： <code>Auth</code>认证服务 通过暴露<code>/oauth/token</code>接口，让需要认真的接口远程调用进行认证  </p>
+<h3 id="Admin模块"><a href="#Admin模块" class="headerlink" title="Admin模块"></a><code>Admin</code>模块</h3><p><code>admin</code>模块</p>
+<h4 id="订单管理"><a href="#订单管理" class="headerlink" title="订单管理"></a>订单管理</h4><p>暂时还没到这个层面</p>
+<h4 id="用户管理"><a href="#用户管理" class="headerlink" title="用户管理"></a>用户管理</h4><h5 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h5><ul>
+<li><p>授权<code>admin</code>  没有修改最后登录</p>
+</li>
+<li><p>授权了管理员或者是别的账号    角色用户数没有增加 </p>
+</li>
+<li><p>不管是增加和删除都没有增加数量    </p>
+</li>
+<li><p>删除和授权  角色关系映射和角色表应该改变 </p>
+<p><img src="/2021/06/16/mall%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/image-20210630084404241.png" srcset="/img/loading.gif" lazyload alt="image-20210630084404241"></p>
+</li>
+</ul>
+<p>删除问题已经解决</p>
+<h5 id="解决方案："><a href="#解决方案：" class="headerlink" title="解决方案："></a>解决方案：</h5><p>查看三张表的关系</p>
+<p><img src="/2021/06/16/mall%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/image-20210630104835298.png" srcset="/img/loading.gif" lazyload alt="image-20210630104835298"></p>
+<p>接口定义  加上事务  不然出现异常用户不会回滚 </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Transactional</span><br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">delete</span><span class="hljs-params">(Long id)</span></span>;<br></code></pre></td></tr></table></figure>
+
+
+
+<p>实现类</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Override</span><br><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">delete</span><span class="hljs-params">(Long id)</span> </span>&#123;<br>    <span class="hljs-comment">// 删除账号</span><br>    <span class="hljs-keyword">int</span> count = adminMapper.deleteByPrimaryKey(id);<br>    System.out.println(id);<br>    <span class="hljs-comment">// 获取关系映射id</span><br>    UmsAdminRoleRelation roleRelation = adminRoleRelationDao.getRoleIdByAdminId(id);<br>    System.out.println(roleRelation);<br>    <span class="hljs-comment">// 删除关系映射</span><br>    <span class="hljs-keyword">int</span> i = adminRoleRelationMapper .deleteByPrimaryKey (roleRelation.getId()); <br>    <span class="hljs-comment">// 删除role对应的角色数量</span><br>    UmsRole umsRole = roleService.selectRoleById(roleRelation.getRoleId());<br>    umsRole.setAdminCount(umsRole.getAdminCount()-<span class="hljs-number">1</span>);<br>    roleService.update(roleRelation.getRoleId() , umsRole);<br>    <span class="hljs-comment">// 删除缓存</span><br>    adminCacheService.delAdmin(id);<br>    <span class="hljs-keyword">return</span> count;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+
+<p>退出登录修改最后登录时间 </p>
+<p>添加中角色数量没有增加   需要进行修改 </p>
+<h4 id="会员管理"><a href="#会员管理" class="headerlink" title="会员管理"></a>会员管理</h4><h5 id="对接会员模块"><a href="#对接会员模块" class="headerlink" title="对接会员模块"></a>对接会员模块</h5><p>如图可知，现在开源项目 ， 会员管理并未完成， 对接会员管理</p>
+<p><img src="/2021/06/16/mall%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/image-20210703101321207.png" srcset="/img/loading.gif" lazyload alt="image-20210703101321207"></p>
+<h5 id="修改后端"><a href="#修改后端" class="headerlink" title="修改后端"></a>修改后端</h5><ol>
+<li><p>创建菜单列表  对应的数据库为 <code>ums_menu</code>这个实现的接口为  <code>/menu/**</code></p>
+</li>
+<li><p>使用改接口添加会员字段  （对菜单表进行insert操作）</p>
+</li>
+<li><p>创建子级目录 会员列表和会员等级列表    &lt; 数据库设计如下</p>
+<ol>
+<li><img src="/2021/06/16/mall%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/image-20210703111656921.png" srcset="/img/loading.gif" lazyload alt="image-20210703111656921"></li>
+</ol>
+</li>
+<li><p>在资源列表中将会员列表的接口 和 会员等级的接口添加进去资源列表，要不然前端无法调用</p>
+</li>
+<li><p>添加之后设置等级 ，缓存等级表是<code>ums_resource_category</code>  这里有对应的模块用于对模块进行分类显示</p>
+</li>
+<li><p>其中这个表的id要与resource资源路径的categoryId一致</p>
+<ol>
+<li><img src="/2021/06/16/mall%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/image-20210703112539225.png" srcset="/img/loading.gif" lazyload alt="image-20210703112539225"></li>
+</ol>
+</li>
+</ol>
+<h5 id="修改前端"><a href="#修改前端" class="headerlink" title="修改前端"></a>修改前端</h5><h5 id="-1"><a href="#-1" class="headerlink" title></a></h5><blockquote>
+<p>前端采用的是vue + elementUi </p>
+<p>Vue对组件的路径管理  采用的是路由的方式 </p>
+<p>所以得先修改路由，进行展示 </p>
+</blockquote>
+<p>先查看路由</p>
+<p>修改路由注意事项</p>
+<p> <img src="/2021/06/16/mall%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/image-20210703125358063.png" srcset="/img/loading.gif" lazyload alt="image-20210703125358063"></p>
+<blockquote>
+<p>这里是用全局路由数组和请求过来的权限数组进行匹配  如果有不匹配的则不进行显示</p>
+</blockquote>
+<p>查看路由匹配算法 </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-comment">//判断是否有权限访问该菜单</span><br><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">hasPermission</span>(<span class="hljs-params">menus, route</span>) </span>&#123;<br>   <span class="hljs-comment">// 将路由名字进行判断</span><br>  <span class="hljs-keyword">if</span> (route.name) &#123;<br>      <span class="hljs-comment">// 通过路由名字 和 menus 进行匹配 查看是否匹配</span><br>    <span class="hljs-keyword">let</span> currMenu = getMenu(route.name, menus);<br>    <span class="hljs-keyword">if</span> (currMenu!=<span class="hljs-literal">null</span>) &#123;<br>      <span class="hljs-comment">//设置菜单的标题、图标和可见性</span><br>      <span class="hljs-keyword">if</span> (currMenu.title != <span class="hljs-literal">null</span> &amp;&amp; currMenu.title !== <span class="hljs-string">&#x27;&#x27;</span>) &#123;<br>        route.meta.title = currMenu.title;<br>      &#125;<br>      <span class="hljs-keyword">if</span> (currMenu.icon != <span class="hljs-literal">null</span> &amp;&amp; currMenu.title !== <span class="hljs-string">&#x27;&#x27;</span>) &#123;<br>        route.meta.icon = currMenu.icon;<br>      &#125;<br>      <span class="hljs-keyword">if</span>(currMenu.hidden!=<span class="hljs-literal">null</span>)&#123;<br>        route.hidden = currMenu.hidden !== <span class="hljs-number">0</span>;<br>      &#125;<br>      <span class="hljs-keyword">if</span> (currMenu.sort != <span class="hljs-literal">null</span> &amp;&amp; currMenu.sort !== <span class="hljs-string">&#x27;&#x27;</span>) &#123;<br>        route.sort = currMenu.sort;<br>      &#125;<br>      <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;<br>    &#125; <span class="hljs-keyword">else</span> &#123;<br>      route.sort = <span class="hljs-number">0</span>;<br>      <span class="hljs-keyword">if</span> (route.hidden !== <span class="hljs-literal">undefined</span> &amp;&amp; route.hidden === <span class="hljs-literal">true</span>) &#123;<br>          <span class="hljs-comment">// 不会显示</span><br>        route.sort=-<span class="hljs-number">1</span>;<br>        <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;<br>      &#125; <span class="hljs-keyword">else</span> &#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br>      &#125;<br>    &#125;<br>  &#125; <span class="hljs-keyword">else</span> &#123;<br>    <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span><br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+
+<p>所以这里的路由命和meanu菜单的name要保持一致</p>
+<p>增加对会员列表的增删查改 </p>
+<p>完成 。。。</p>
+<p>增加会员等级列表 </p>
+<p>完成</p>
+<p>增加会员成长值 </p>
+<p>完成</p>
+<p>增加会员登录日志</p>
+<p>完成</p>
 
             </div>
             <hr>
